@@ -28,6 +28,10 @@ public class Post {
         this.author = author;
         this.content = content;
         this.timestamp = timestamp;
+
+        if (postId > postCounter) {
+            postCounter = postId;
+        }
     }
 
     public void setPostId(int postId) {
