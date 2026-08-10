@@ -21,10 +21,10 @@ public class Account {
         return username;
     }
 
-    public void setpassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
-    public int getpassword() {
+    public String getPassword() {
         return password;
     }
 }
