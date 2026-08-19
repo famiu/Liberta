@@ -73,7 +73,7 @@ public class UserStorage {
     }
 
     //Add user to the hashmap
-    public void addUser(UserAccount newUser){
+    public static void addUser(UserAccount newUser){
         if(users.containsKey(newUser.getUsername())){
             System.out.println("User is already in database");
             return;
@@ -83,7 +83,7 @@ public class UserStorage {
     }
 
     //Delete user from the hashmap
-    public void deleteUser(String username){
+    public static void deleteUser(String username){
         if(users.containsKey(username)){
             users.remove(username);
             updateUserDatabase();
@@ -93,7 +93,7 @@ public class UserStorage {
     }
 
     //Add the new user information to the end of the users.txt file
-    private void addUserToDatabase(UserAccount newUser){
+    private static void addUserToDatabase(UserAccount newUser){
         try(BufferedWriter w = new BufferedWriter(new FileWriter("data/users.txt",true))){
             w.newLine();
             w.write("Username: "+newUser.getUsername());
@@ -120,7 +120,7 @@ public class UserStorage {
     }
 
     //Clear all information from the databse and add all user from the hashmap to the database
-    public void updateUserDatabase(){
+    private static void updateUserDatabase(){
         try(FileWriter fw = new FileWriter("data/users.txt")){
             fw.write("");
         }catch(IOException e){
@@ -129,5 +129,10 @@ public class UserStorage {
         users.forEach((key,value)->{
             addUserToDatabase(value);
         });
+    }
+
+    //Check whether a user already exist
+    public static boolean checkUser(String username){
+        return users.containsKey(username);
     }
 }
