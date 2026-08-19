@@ -11,7 +11,7 @@ import java.util.*;
 import storage.*;
 import entity.UserAccount;
 
-public class Register extends JFrame{
+public class Register extends JFrame implements ActionListener{
     private ImageIcon icon;
     private JTextField userfld, namefld,emailfld;
     private JPasswordField passfld;
@@ -78,8 +78,8 @@ public class Register extends JFrame{
         loginbtn.setBorderPainted(false);
         registerbtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginbtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        // registerbtn.addActionListener(this);
-        // loginbtn.addActionListener(this);
+        registerbtn.addActionListener(this);
+        loginbtn.addActionListener(this);
 
         register.add(Box.createVerticalGlue());
         register.add(name);
@@ -113,5 +113,17 @@ public class Register extends JFrame{
         this.repaint();
     }
 
-    
+    @Override
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==registerbtn){
+            String username = userfld.getText(), name = namefld.getText(), email = emailfld.getText();
+            String password = new String(passfld.getPassword());
+            LocalDate dateOfBirth = LocalDate.parse(datefld.getText());
+            if(UserStorage.checkUser(username)){
+                showMessageDialog(null, "This user already exist","Warning",JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                UserStorage.addUser(new UserAccount(username,password,name,email,"",dateOfBirth));
+            }
+        }
+    }
 }
