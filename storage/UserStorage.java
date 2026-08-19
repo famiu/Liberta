@@ -135,4 +135,9 @@ public class UserStorage {
     public static boolean checkUser(String username){
         return users.containsKey(username);
     }
+
+    //Check whether a user password match
+    public static boolean checkPassword(String username, String password){
+        return users.get(username).getPassword().equals(password);
+    }
 }

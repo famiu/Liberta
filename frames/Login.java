@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Login extends JFrame{
+public class Login extends JFrame implements ActionListener{
     private ImageIcon icon;
     private JTextField userfld;
     private JPasswordField passfld;
@@ -85,8 +85,8 @@ public class Login extends JFrame{
         registerbtn.setBorderPainted(false);
         loginbtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         registerbtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        // loginbtn.addActionListener(this);
-        // registerbtn.addActionListener(this);
+        loginbtn.addActionListener(this);
+        registerbtn.addActionListener(this);
         
         btn.add(Box.createRigidArea(new Dimension(0,25)));
         btn.add(loginbtn);
@@ -107,4 +107,22 @@ public class Login extends JFrame{
         this.repaint();
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==loginbtn){
+            String username = userfld.getText(), password = new String(passfld.getPassword());
+            if(username.isEmpty()||password.isEmpty()){
+                showMessageDialog(null, "Please fill up all the fields","Warning", JOptionPane.WARNING_MESSAGE);
+            }else{
+                if(!UserStorage.checkUser(username)){
+                    showMessageDialog(null, "This user does not exist","Warning", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    if(!UserStorage.checkPassword(username, password)){
+                        passfld.setText("");
+                        showMessageDialog(null,"Password does not match","Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            }
+        }
+    }
 }
