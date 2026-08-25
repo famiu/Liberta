@@ -5,7 +5,9 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import storage.*;
@@ -21,7 +23,6 @@ public class Register extends JFrame implements ActionListener{
         super("Liberta: Embrace your freedom");
         this.setSize(1280, 720);
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new GridLayout(1,2));
 
@@ -118,12 +119,23 @@ public class Register extends JFrame implements ActionListener{
         if(e.getSource()==registerbtn){
             String username = userfld.getText(), name = namefld.getText(), email = emailfld.getText();
             String password = new String(passfld.getPassword());
-            LocalDate dateOfBirth = LocalDate.parse(datefld.getText());
-            if(UserStorage.checkUser(username)){
-                showMessageDialog(null, "This user already exist","Warning",JOptionPane.INFORMATION_MESSAGE);
-            }else{
-                UserStorage.addUser(new UserAccount(username,password,name,email,"",dateOfBirth));
+            LocalDate dateOfBirth;
+            try{
+                dateOfBirth = LocalDate.parse(datefld.getText());
+            }catch(DateTimeParseException de){
+                return;
             }
+            if(username.isEmpty()||name.isEmpty()||email.isEmpty()||password.isEmpty()){
+                showMessageDialog(null, "Please fill up all the fields","Warning", JOptionPane.WARNING_MESSAGE);
+            }else{
+                if(UserStorage.checkUser(username)){
+                    showMessageDialog(null, "Username must be unique","Warning",JOptionPane.INFORMATION_MESSAGE);
+                    userfld.setText("");
+                }else{
+                    UserStorage.addUser(new UserAccount(username,password,name,email,"",dateOfBirth));
+                }
+            }
+            
         }
     }
 }
