@@ -32,10 +32,11 @@ public class AdminStorage {
     //Return all Admin from the database
     public static HashMap<String,AdminAccount> getAllAdmin(){
         if(admins.isEmpty()){
-            try(BufferedReader r = new BufferedReader(new FileReader("data/admins.txt"))){
+            try(Scanner r = new Scanner(new File("data/admins.txt"))){
                 String line;
                 String key = "";
-                while((line=r.readLine())!=null){
+                while(r.hasNextLine()){
+                    line = r.nextLine();
                     String comp;
                     if(line.length()>3) comp = line.substring(0,3);
                     else comp = "";
@@ -76,13 +77,10 @@ public class AdminStorage {
 
     //Add the new Admin information to the end of the admins.txt file
     private static void addAdminToDatabase(AdminAccount newAdmin){
-        try(BufferedWriter w = new BufferedWriter(new FileWriter("data/admins.txt",true))){
-            w.newLine();
-            w.write("Username: "+newAdmin.getUsername());
-            w.newLine();
-            w.write("Password: "+newAdmin.getPassword());
-            w.newLine();
-            w.write("===============================================");
+        try(FileWriter w = new FileWriter("data/admins.txt",true)){
+            w.write("Username: "+newAdmin.getUsername()+"\n");
+            w.write("Password: "+newAdmin.getPassword()+"\n");
+            w.write("===============================================\n");
         }catch (IOException e) {
         System.out.println("Error reading file.");
         }

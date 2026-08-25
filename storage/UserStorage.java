@@ -32,10 +32,11 @@ public class UserStorage {
     //Return all user from the database
     public static HashMap<String,UserAccount> getAllUser(){
         if(users.isEmpty()){
-            try(BufferedReader r = new BufferedReader(new FileReader("data/users.txt"))){
+            try(Scanner r = new Scanner(new File("data/users.txt"))){
                 String line;
                 String key = "";
-                while((line=r.readLine())!=null){
+                while(r.hasNextLine()){
+                    line = r.nextLine();
                     String comp;
                     if(line.length()>3) comp = line.substring(0,3);
                     else comp = "";
@@ -94,26 +95,19 @@ public class UserStorage {
 
     //Add the new user information to the end of the users.txt file
     private static void addUserToDatabase(UserAccount newUser){
-        try(BufferedWriter w = new BufferedWriter(new FileWriter("data/users.txt",true))){
-            w.newLine();
-            w.write("Username: "+newUser.getUsername());
-            w.newLine();
-            w.write("Password: "+newUser.getPassword());
-            w.newLine();
-            w.write("Display Name: "+newUser.getDisplayName());
-            w.newLine();;
-            w.write("Email: "+newUser.getEmail());
-            w.newLine();
-            w.write("Date of birth: "+newUser.getDateOfBirth());
-            w.newLine();
-            w.write("Bio: "+newUser.getBio());
-            w.newLine();
+        try(FileWriter w = new FileWriter("data/users.txt",true)){
+            w.write("Username: "+newUser.getUsername()+"\n");
+            w.write("Password: "+newUser.getPassword()+"\n");
+            w.write("Display Name: "+newUser.getDisplayName()+"\n");
+            w.write("Email: "+newUser.getEmail()+"\n");
+            w.write("Date of birth: "+newUser.getDateOfBirth()+"\n");
+            w.write("Bio: "+newUser.getBio()+"\n");
             w.write("Post Id: ");
             for(int id: newUser.getPostIds()){
                 w.write(id+" ");
             }
-            w.newLine();
-            w.write("===============================================");
+            w.write("\n");
+            w.write("===============================================\n");
         }catch (IOException e) {
         System.out.println("Error reading file.");
         }
