@@ -2,7 +2,7 @@ package frames;
 
 import javax.swing.*;
 
-import storage.UserStorage;
+import storage.*;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -16,11 +16,11 @@ public class Login extends JFrame implements ActionListener{
     private JPasswordField passfld;
     private JButton loginbtn, registerbtn;
     private JRadioButton user, admin;
+    Register regPage;
     public Login() {
         super("Liberta: Embrace your freedom");
         this.setSize(1280, 720);
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new GridLayout(1,2));
 
@@ -113,7 +113,7 @@ public class Login extends JFrame implements ActionListener{
             String username = userfld.getText(), password = new String(passfld.getPassword());
             if(username.isEmpty()||password.isEmpty()){
                 showMessageDialog(null, "Please fill up all the fields","Warning", JOptionPane.WARNING_MESSAGE);
-            }else{
+            }else if(user.isSelected()){
                 if(!UserStorage.checkUser(username)){
                     showMessageDialog(null, "This user does not exist","Warning", JOptionPane.INFORMATION_MESSAGE);
                 }else{
@@ -122,7 +122,22 @@ public class Login extends JFrame implements ActionListener{
                         showMessageDialog(null,"Password does not match","Warning", JOptionPane.WARNING_MESSAGE);
                     }
                 }
+            }else if(admin.isSelected()){
+                if(!AdminStorage.checkAdmin(username)){
+                    showMessageDialog(null, "This user does not exist","Warning", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    if(!AdminStorage.checkPassword(username, password)){
+                        passfld.setText("");
+                        showMessageDialog(null,"Password does not match","Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
             }
+        }
+        else if(e.getSource()==registerbtn){
+            this.setVisible(false);
+            
+            if(regPage==null) regPage = new Register();
+            regPage.setVisible(true);
         }
     }
 }
