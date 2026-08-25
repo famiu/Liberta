@@ -16,7 +16,7 @@ public class Login extends JFrame implements ActionListener{
     private JPasswordField passfld;
     private JButton loginbtn, registerbtn;
     private JRadioButton user, admin;
-    Register regPage;
+    private Register regPage;
     public Login() {
         super("Liberta: Embrace your freedom");
         this.setSize(1280, 720);
@@ -136,7 +136,9 @@ public class Login extends JFrame implements ActionListener{
         else if(e.getSource()==registerbtn){
             this.setVisible(false);
             
-            if(regPage==null) regPage = new Register();
+            if(regPage==null){
+                regPage = new Register(this);
+            }
             regPage.setVisible(true);
         }
     }

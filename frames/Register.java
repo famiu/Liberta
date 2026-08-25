@@ -19,12 +19,14 @@ public class Register extends JFrame implements ActionListener{
     private JPasswordField passfld;
     private JButton loginbtn, registerbtn;
     private JFormattedTextField datefld;
-    public Register() {
+    private Login logPage;
+    public Register(Login logPage) {
         super("Liberta: Embrace your freedom");
         this.setSize(1280, 720);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new GridLayout(1,2));
+        this.logPage = logPage;
 
         JPanel brand = new JPanel();
         JPanel register = new JPanel();
@@ -127,15 +129,18 @@ public class Register extends JFrame implements ActionListener{
             }
             if(username.isEmpty()||name.isEmpty()||email.isEmpty()||password.isEmpty()){
                 showMessageDialog(null, "Please fill up all the fields","Warning", JOptionPane.WARNING_MESSAGE);
+                return;
             }else{
                 if(UserStorage.checkUser(username)){
                     showMessageDialog(null, "Username must be unique","Warning",JOptionPane.INFORMATION_MESSAGE);
                     userfld.setText("");
+                    return;
                 }else{
                     UserStorage.addUser(new UserAccount(username,password,name,email,"",dateOfBirth));
                 }
             }
-            
         }
+        logPage.setVisible(true);
+        this.setVisible(false);
     }
 }
