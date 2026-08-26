@@ -2,7 +2,7 @@ package storage;
 
 import java.io.*;
 import java.util.*;
-import java.time.LocalDate;
+import java.time.*;
 
 import entity.*;
 
@@ -10,17 +10,7 @@ public class UserStorage {
     private static HashMap<String, UserAccount> users = new HashMap<>();
 
     static{
-        // Checks whether the folder exists, if not it creates it
-        File a = new File("data");
-        if(!a.exists()) a.mkdir();
-        File b = new File("data/users.txt");
-        if(!b.exists()){
-            try{
-                b.createNewFile();
-            } catch(Exception e){
-                System.out.println("Failed to create users.txt");
-            }
-        }
+        StorageUtility.ensurePath("data", "users.txt");
         //If database has any information, then store it in users hashmap.
         getAllUser();
     }
@@ -73,6 +63,10 @@ public class UserStorage {
         return users;
     }
 
+    public static UserAccount getUser(String username){
+        return users.get(username);
+    }
+
     //Add user to the hashmap
     public static void addUser(UserAccount newUser){
         if(users.containsKey(newUser.getUsername())){
@@ -86,7 +80,38 @@ public class UserStorage {
     //Delete user from the hashmap
     public static void deleteUser(String username){
         if(users.containsKey(username)){
+            PostStorage.deletePostsByAuthor(username);
             users.remove(username);
+            updateUserDatabase();
+        }else{
+            System.out.println("User is not found");
+        }
+    }
+
+    //Add post ID to a user
+    public static void addPost(String username, int postId){
+        if(users.containsKey(username)){
+            users.get(username).addPost(postId);
+            updateUserDatabase();
+        }else{
+            System.out.println("User is not found");
+        }
+    }
+
+    //Delete post ID from a user
+    public static void deletePost(String username, int postId){
+        if(users.containsKey(username)){
+            users.get(username).removePost(postId);
+            updateUserDatabase();
+        }else{
+            System.out.println("User is not found");
+        }
+    }
+
+    //Delete all post IDs from a user
+    public static void deletePosts(String username){
+        if(users.containsKey(username)){
+            users.get(username).getPostIds().clear();
             updateUserDatabase();
         }else{
             System.out.println("User is not found");

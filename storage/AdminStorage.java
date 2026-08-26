@@ -2,7 +2,7 @@ package storage;
 
 import java.io.*;
 import java.util.*;
-import java.time.LocalDate;
+import java.time.*;
 
 import entity.*;
 
@@ -10,17 +10,7 @@ public class AdminStorage {
     private static HashMap<String, AdminAccount> admins = new HashMap<>();
 
     static{
-        // Checks whether the folder exists, if not it creates it
-        File a = new File("data");
-        if(!a.exists()) a.mkdir();
-        File b = new File("data/admins.txt");
-        if(!b.exists()){
-            try{
-                b.createNewFile();
-            } catch(Exception e){
-                System.out.println("Failed to create admins.txt");
-            }
-        }
+        StorageUtility.ensurePath("data", "admins.txt");
         //If database has any information, then store it in admins hashmap.
         getAllAdmin();
     }
