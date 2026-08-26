@@ -32,10 +32,11 @@ public class UserStorage {
     //Return all user from the database
     public static HashMap<String,UserAccount> getAllUser(){
         if(users.isEmpty()){
-            try(BufferedReader r = new BufferedReader(new FileReader("data/users.txt"))){
+            try(Scanner r = new Scanner(new File("data/users.txt"))){
                 String line;
                 String key = "";
-                while((line=r.readLine())!=null){
+                while(r.hasNextLine()){
+                    line = r.nextLine();
                     String comp;
                     if(line.length()>3) comp = line.substring(0,3);
                     else comp = "";
@@ -73,7 +74,7 @@ public class UserStorage {
     }
 
     //Add user to the hashmap
-    public void addUser(UserAccount newUser){
+    public static void addUser(UserAccount newUser){
         if(users.containsKey(newUser.getUsername())){
             System.out.println("User is already in database");
             return;
@@ -83,7 +84,7 @@ public class UserStorage {
     }
 
     //Delete user from the hashmap
-    public void deleteUser(String username){
+    public static void deleteUser(String username){
         if(users.containsKey(username)){
             users.remove(username);
             updateUserDatabase();
@@ -93,34 +94,27 @@ public class UserStorage {
     }
 
     //Add the new user information to the end of the users.txt file
-    private void addUserToDatabase(UserAccount newUser){
-        try(BufferedWriter w = new BufferedWriter(new FileWriter("data/users.txt",true))){
-            w.newLine();
-            w.write("Username: "+newUser.getUsername());
-            w.newLine();
-            w.write("Password: "+newUser.getPassword());
-            w.newLine();
-            w.write("Display Name: "+newUser.getDisplayName());
-            w.newLine();;
-            w.write("Email: "+newUser.getEmail());
-            w.newLine();
-            w.write("Date of birth: "+newUser.getDateOfBirth());
-            w.newLine();
-            w.write("Bio: "+newUser.getBio());
-            w.newLine();
+    private static void addUserToDatabase(UserAccount newUser){
+        try(FileWriter w = new FileWriter("data/users.txt",true)){
+            w.write("Username: "+newUser.getUsername()+"\n");
+            w.write("Password: "+newUser.getPassword()+"\n");
+            w.write("Display Name: "+newUser.getDisplayName()+"\n");
+            w.write("Email: "+newUser.getEmail()+"\n");
+            w.write("Date of birth: "+newUser.getDateOfBirth()+"\n");
+            w.write("Bio: "+newUser.getBio()+"\n");
             w.write("Post Id: ");
             for(int id: newUser.getPostIds()){
                 w.write(id+" ");
             }
-            w.newLine();
-            w.write("===============================================");
+            w.write("\n");
+            w.write("===============================================\n");
         }catch (IOException e) {
         System.out.println("Error reading file.");
         }
     }
 
     //Clear all information from the databse and add all user from the hashmap to the database
-    public void updateUserDatabase(){
+    private static void updateUserDatabase(){
         try(FileWriter fw = new FileWriter("data/users.txt")){
             fw.write("");
         }catch(IOException e){
@@ -129,5 +123,15 @@ public class UserStorage {
         users.forEach((key,value)->{
             addUserToDatabase(value);
         });
+    }
+
+    //Check whether a user already exist
+    public static boolean checkUser(String username){
+        return users.containsKey(username);
+    }
+
+    //Check whether a user password match
+    public static boolean checkPassword(String username, String password){
+        return users.get(username).getPassword().equals(password);
     }
 }
