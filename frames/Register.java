@@ -31,7 +31,7 @@ public class Register extends JFrame implements ActionListener{
         JPanel register = new JPanel();
 
         brand.setLayout(new GridBagLayout());
-        JLabel logo = new JLabel(new ImageIcon("./assets/branding/svg/png/512/logo-vertical.png"));
+        JLabel logo = new JLabel(new ImageIcon("./assets/branding/png/512/logo-vertical.png"));
         logo.setSize(400,400);
         brand.add(logo);
 
@@ -107,7 +107,7 @@ public class Register extends JFrame implements ActionListener{
         this.add(brand);
         this.add(register);
 
-        icon = new ImageIcon("./assets/branding/svg/png/64/icon.png");
+        icon = new ImageIcon("./assets/branding/png/64/icon.png");
         this.setIconImage(icon.getImage());
 
         this.setVisible(true);
