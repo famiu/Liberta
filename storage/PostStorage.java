@@ -84,18 +84,18 @@ public class PostStorage {
     }
 
     public static void deletePostsByAuthor(String username) {
-        ArrayList<Integer> postsToDelete = new ArrayList<>();
-        for (Post post : posts.values()) {
-            if (post.getAuthor().equals(username)) {
-                postsToDelete.add(post.getPostId());
+        UserAccount user = UserStorage.getUser(username);
+        if (user == null) {
+            System.out.println("User is not found");
+            return;
+        }
+
+        TreeSet<Integer> postIds = user.getPostIds();
+        if (!postIds.isEmpty()) {
+            for (int postId : postIds) {
+                deletePostNoWrite(postId);
             }
-        }
 
-        for (Integer postId : postsToDelete) {
-            deletePostNoWrite(postId);
-        }
-
-        if (!postsToDelete.isEmpty()) {
             UserStorage.deletePosts(username);
             updatePostsMetadata();
         }
@@ -133,7 +133,7 @@ public class PostStorage {
                 String postInfoString = metadataScanner.nextLine();
                 String postInfo[] = postInfoString.split(";");
 
-                Integer postId = Integer.parseInt(postInfo[0]);
+                int postId = Integer.parseInt(postInfo[0]);
                 String author = postInfo[1];
                 LocalDateTime timestamp = LocalDateTime.parse(postInfo[2]);
                 String content = getPostContent(postId);
