@@ -4,14 +4,14 @@ import java.lang.*;
 
 public class Account {
     private String username;
-    private int passwordHash;
+    private String password;
 
     public Account() {
     }
 
-    public Account(String username, int passwordHash) {
+    public Account(String username, String password) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
     }
 
     public void setUsername(String username) {
@@ -21,10 +21,10 @@ public class Account {
         return username;
     }
 
-    public void setPasswordHash(int passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
-    public int getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 }

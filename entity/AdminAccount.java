@@ -6,7 +6,7 @@ public class AdminAccount extends Account {
     public AdminAccount() {
     }
 
-    public AdminAccount(String username, int passwordHash) {
-        super(username, passwordHash);
+    public AdminAccount(String username, String password) {
+        super(username, password);
     }
 }
