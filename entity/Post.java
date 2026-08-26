@@ -1,7 +1,7 @@
 package entity;
 
 import java.lang.*;
-import java.time.LocalDateTime;
+import java.time.*;
 
 public class Post {
     private int postId;
