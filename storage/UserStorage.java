@@ -1,6 +1,7 @@
 package storage;
 
 import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 import java.time.*;
 
@@ -8,9 +9,12 @@ import entity.*;
 
 public class UserStorage {
     private static HashMap<String, UserAccount> users = new HashMap<>();
+    private static final File defaultProfilePicture = new File("./assets/icons/png/512/default-profile.png");
+    private static final File profilePicturesDirectory = new File("./data/profile-pictures");
 
     static{
         StorageUtility.ensurePath("data", "users.txt");
+        StorageUtility.ensurePath(profilePicturesDirectory.getPath());
         //If database has any information, then store it in users hashmap.
         getAllUser();
     }
@@ -67,6 +71,24 @@ public class UserStorage {
         return users.get(username);
     }
 
+    // Return the profile picture of a user
+    public static File getUserProfilePicture(String username) {
+        if (!users.containsKey(username)) {
+            System.out.println("User is not found");
+            return defaultProfilePicture;
+        }
+
+        File png = new File(profilePicturesDirectory, username + ".png");
+        File jpg = new File(profilePicturesDirectory, username + ".jpg");
+        if (png.exists()) {
+            return png;
+        } else if (jpg.exists()) {
+            return jpg;
+        } else {
+            return defaultProfilePicture;
+        }
+    }
+
     //Add user to the hashmap
     public static void addUser(UserAccount newUser){
         if(users.containsKey(newUser.getUsername())){
@@ -81,6 +103,7 @@ public class UserStorage {
     public static void deleteUser(String username){
         if(users.containsKey(username)){
             PostStorage.deletePostsByAuthor(username);
+            deleteUserProfilePicture(username);
             users.remove(username);
             updateUserDatabase();
         }else{
@@ -95,6 +118,40 @@ public class UserStorage {
             updateUserDatabase();
         }else{
             System.out.println("User is not found");
+        }
+    }
+
+    // Set the profile picture of a user
+    public static void setUserProfilePicture(String username, File picture) {
+        if (!users.containsKey(username)) {
+            System.out.println("User is not found");
+            return;
+        }
+
+        if (picture == null || !picture.exists()) {
+            System.out.println("Invalid profile picture");
+            return;
+        }
+
+        // Determine the destination file based on the file extension
+        String filename = picture.getName().toLowerCase();
+        File destination;
+        if (filename.endsWith(".png")) {
+            destination = new File(profilePicturesDirectory, username + ".png");
+        } else if (filename.endsWith(".jpg")) {
+            destination = new File(profilePicturesDirectory, username + ".jpg");
+        } else {
+            System.out.println("Invalid file format. Only PNG and JPG are allowed.");
+            return;
+        }
+
+        deleteUserProfilePicture(username);
+
+        // Copy the profile picture to the destination
+        try {
+            Files.copy(picture.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            System.out.println("Error updating profile picture");
         }
     }
 
@@ -115,6 +172,13 @@ public class UserStorage {
             updateUserDatabase();
         }else{
             System.out.println("User is not found");
+        }
+    }
+
+    public static void deleteUserProfilePicture(String username) {
+        File pfp = getUserProfilePicture(username);
+        if (pfp.exists() && !pfp.equals(defaultProfilePicture)) {
+            pfp.delete();
         }
     }
 
