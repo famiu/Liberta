@@ -15,8 +15,8 @@ import entity.*;
 // Posts are loaded into a map in memory for fast access, and changes are written back to the data
 // files after any modification.
 public class PostStorage {
-    private static final File postsFile = new File("data/posts.txt");
-    private static final File postsDirectory = new File("data/posts");
+    private static final File postsFile = new File("./data/posts.txt");
+    private static final File postsDirectory = new File("./data/posts");
     private static HashMap<Integer, Post> posts = new HashMap<>();
 
     // Ensure that the database paths exist and populate the posts map by reading the database
