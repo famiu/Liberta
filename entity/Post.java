@@ -61,5 +61,13 @@ public class Post {
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
+
+    public static void setPostCounter(int postCounter) {
+        Post.postCounter = postCounter;
+    }
+
+    public static int getPostCounter() {
+        return postCounter;
+    }
 }
 
