@@ -18,7 +18,7 @@ public class UserAccount extends Account {
         super(username, password);
         this.displayName = displayName;
         this.email = email;
-        this.bio = bio;
+        this.setBio(bio);
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -37,7 +37,8 @@ public class UserAccount extends Account {
     }
 
     public void setBio(String bio) {
-        this.bio = bio;
+        // Make sure the bio only has one line, otherwise storing it in the database will not work properly
+        this.bio = bio.replace("\n", "").trim();
     }
     public String getBio() {
         return bio;

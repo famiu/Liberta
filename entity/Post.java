@@ -2,12 +2,14 @@ package entity;
 
 import java.lang.*;
 import java.time.*;
+import java.util.*;
 
 public class Post {
     private int postId;
     private String author;
     private String content;
     private LocalDateTime timestamp;
+    private TreeSet<String> likes = new TreeSet<String>();
 
     private static int postCounter = 0;
 
@@ -62,6 +64,35 @@ public class Post {
         return timestamp;
     }
 
+    public TreeSet<String> getLikes() {
+        return likes;
+    }
+
+    public void addLike(String username) {
+        likes.add(username);
+    }
+
+    public void removeLike(String username) {
+        likes.remove(username);
+    }
+
+    public void toggleLike(String username) {
+        if (isLikedBy(username)) {
+            removeLike(username);
+        }
+        else {
+            addLike(username);
+        }
+    }
+
+    public boolean isLikedBy(String username) {
+        return likes.contains(username);
+    }
+
+    public int getLikeCount() {
+        return likes.size();
+    }
+
     public static void setPostCounter(int postCounter) {
         Post.postCounter = postCounter;
     }
@@ -70,4 +101,3 @@ public class Post {
         return postCounter;
     }
 }
-

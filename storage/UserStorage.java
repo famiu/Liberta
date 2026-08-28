@@ -98,10 +98,21 @@ public class UserStorage {
         addUserToDatabase(newUser);
     }
 
+    //Update user in the hashmap and database
+    public static void updateUser(UserAccount updatedUser){
+        if(users.containsKey(updatedUser.getUsername())){
+            users.put(updatedUser.getUsername(), updatedUser);
+            updateUserDatabase();
+        }else{
+            System.out.println("User is not found");
+        }
+    }
+
     //Delete user from the hashmap
     public static void deleteUser(String username){
         if(users.containsKey(username)){
             PostStorage.deletePostsByAuthor(username);
+            PostStorage.removeLikesByUser(username);
             deleteUserProfilePicture(username);
             users.remove(username);
             updateUserDatabase();
