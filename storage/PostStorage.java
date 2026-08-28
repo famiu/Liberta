@@ -10,7 +10,9 @@ import entity.*;
 // Class to handle storage of Post objects.
 //
 // Post metadata is stored in data/posts.txt, with one post per line and semicolon-separated
-// fields: postId;author;timestamp. Post content is stored in data/posts/<postId>.txt.
+// fields: postId;author;timestamp;likes.
+// likes is a comma-separated list of usernames.
+// Post content is stored in data/posts/<postId>.txt.
 //
 // Posts are loaded into a map in memory for fast access, and changes are written back to the data
 // files after any modification.
@@ -53,7 +55,7 @@ public class PostStorage {
             UserStorage.addPost(newPost.getAuthor(), newPost.getPostId());
 
             try (FileWriter metadataWriter = new FileWriter(postsFile, true)) {
-                metadataWriter.write(newPost.getPostId() + ";" + newPost.getAuthor() + ";" + newPost.getTimestamp() + "\n");
+                metadataWriter.write(getPostMetadata(newPost));
             } catch (IOException e) {
                 System.out.println("Error writing post metadata to file");
             }
@@ -66,9 +68,19 @@ public class PostStorage {
         if (posts.containsKey(postId)) {
             Post post = posts.get(postId);
             post.setContent(content);
-            writePostContent(post);
+            updatePost(post);
         } else {
             System.out.println("Post with ID " + postId + " does not exist");
+        }
+    }
+
+    public static void updatePost(Post updatedPost) {
+        if (posts.containsKey(updatedPost.getPostId())) {
+            posts.put(updatedPost.getPostId(), updatedPost);
+            writePostContent(updatedPost);
+            updatePostsMetadata();
+        } else {
+            System.out.println("Post with ID " + updatedPost.getPostId() + " does not exist");
         }
     }
 
@@ -101,6 +113,13 @@ public class PostStorage {
         }
     }
 
+    public static void removeLikesByUser(String username) {
+        for (Post post : posts.values()) {
+            post.removeLike(username);
+        }
+        updatePostsMetadata();
+    }
+
     private static File getPostFile(int postId) {
         return new File(postsDirectory, postId + ".txt");
     }
@@ -131,11 +150,12 @@ public class PostStorage {
         try (Scanner metadataScanner = new Scanner(postsFile)) {
             while (metadataScanner.hasNextLine()) {
                 String postInfoString = metadataScanner.nextLine();
-                String postInfo[] = postInfoString.split(";");
+                String postInfo[] = postInfoString.split(";", -1);
 
                 int postId = Integer.parseInt(postInfo[0]);
                 String author = postInfo[1];
                 LocalDateTime timestamp = LocalDateTime.parse(postInfo[2]);
+                String likes = postInfo[3];
                 String content = getPostContent(postId);
 
                 if (content == null) {
@@ -144,6 +164,12 @@ public class PostStorage {
                 }
 
                 Post post = new Post(postId, author, content, timestamp);
+                if (!likes.isEmpty()) {
+                    String usernames[] = likes.split(",");
+                    for (int i = 0; i < usernames.length; i++) {
+                        post.addLike(usernames[i]);
+                    }
+                }
                 posts.put(postId, post);
             }
         }
@@ -161,10 +187,17 @@ public class PostStorage {
         }
     }
 
+    private static String getPostMetadata(Post post) {
+        String metadata = post.getPostId() + ";" + post.getAuthor() + ";" + post.getTimestamp() + ";";
+        metadata += String.join(",", post.getLikes());
+        metadata += "\n";
+        return metadata;
+    }
+
     private static void updatePostsMetadata() {
         try (FileWriter metadataWriter = new FileWriter(postsFile)) {
             for (Post post : posts.values()) {
-                metadataWriter.write(post.getPostId() + ";" + post.getAuthor() + ";" + post.getTimestamp() + "\n");
+                metadataWriter.write(getPostMetadata(post));
             }
         } catch (IOException e) {
             System.out.println("Error rewriting posts file");
