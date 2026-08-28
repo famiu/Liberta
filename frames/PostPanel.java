@@ -14,12 +14,16 @@ import entity.*;
 import storage.*;
 
 public class PostPanel extends JPanel implements ActionListener {
+    private static final ImageIcon likeIcon = new ImageIcon("./assets/icons/png/24/like-button.png");
+    private static final ImageIcon likedIcon = new ImageIcon("./assets/icons/png/24/liked-button.png");
+
     private Post post;
     private String signedInUser;
 
     private LibertaButton profilePictureButton;
     private LibertaButton displayNameButton;
     private LibertaButton usernameButton;
+    private LibertaButton likeButton;
     private LibertaButton deleteButton;
 
     public PostPanel(Post post, String signedInUser) {
@@ -46,7 +50,6 @@ public class PostPanel extends JPanel implements ActionListener {
         profilePictureButton.setColors(Theme.BACKGROUND, Theme.BACKGROUND2, Theme.TEXT, Theme.TEXT, true);
         profilePictureButton.setBorder(BorderFactory.createEmptyBorder());
         profilePictureButton.setVerticalAlignment(SwingConstants.TOP);
-        profilePictureButton.setToolTipText("View @" + author + "'s profile");
         profilePictureButton.addActionListener(this);
 
         JPanel profilePicturePanel = new JPanel(new BorderLayout());
@@ -103,28 +106,39 @@ public class PostPanel extends JPanel implements ActionListener {
         bodyPanel.add(headerPanel, BorderLayout.NORTH);
         bodyPanel.add(contentArea, BorderLayout.CENTER);
 
-        if (this.signedInUser.equals(author)) {
-            JPanel deletePanel = new JPanel();
-            deletePanel.setLayout(new BoxLayout(deletePanel, BoxLayout.X_AXIS));
-            deletePanel.setOpaque(false);
-            deletePanel.setBorder(BorderFactory.createEmptyBorder(8, 0, 0, 0));
+        JPanel actionPanel = new JPanel();
+        actionPanel.setLayout(new BoxLayout(actionPanel, BoxLayout.X_AXIS));
+        actionPanel.setOpaque(false);
+        actionPanel.setBorder(BorderFactory.createEmptyBorder(8, 0, 0, 0));
 
+        likeButton = new LibertaButton();
+        likeButton.setBorder(BorderFactory.createEmptyBorder());
+        likeButton.addActionListener(this);
+        updateLikeButton();
+        actionPanel.add(likeButton);
+
+        if (this.signedInUser.equals(author)) {
             ImageIcon deleteIcon = new ImageIcon("./assets/icons/png/24/delete-button.png");
             deleteButton = new LibertaButton(deleteIcon);
-            deleteButton.setToolTipText("Delete post");
+            deleteButton.setBorder(BorderFactory.createEmptyBorder());
             deleteButton.addActionListener(this);
-            deletePanel.add(Box.createHorizontalGlue());
-            deletePanel.add(deleteButton);
-
-            bodyPanel.add(deletePanel, BorderLayout.SOUTH);
+            actionPanel.add(Box.createHorizontalGlue());
+            actionPanel.add(deleteButton);
         }
+
+        bodyPanel.add(actionPanel, BorderLayout.SOUTH);
 
         this.add(profilePicturePanel, BorderLayout.WEST);
         this.add(bodyPanel, BorderLayout.CENTER);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == deleteButton) {
+        if (e.getSource() == likeButton) {
+            post.toggleLike(signedInUser);
+            PostStorage.updatePost(post);
+            updateLikeButton();
+        }
+        else if (e.getSource() == deleteButton) {
             LibertaFrame parentFrame = getParentFrame();
             if (parentFrame != null) {
                 DeletePostDialog deletePostDialog = new DeletePostDialog(parentFrame);
@@ -148,6 +162,16 @@ public class PostPanel extends JPanel implements ActionListener {
                 parentFrame.switchFrame(new Profile(this.signedInUser, this.post.getAuthor()));
             }
         }
+    }
+
+    private void updateLikeButton() {
+        if (post.isLikedBy(signedInUser)) {
+            likeButton.setIcon(likedIcon);
+        }
+        else {
+            likeButton.setIcon(likeIcon);
+        }
+        likeButton.setText("" + post.getLikeCount());
     }
 
     private LibertaFrame getParentFrame() {
