@@ -46,7 +46,6 @@ public class UserStorage {
                         users.get(key).setDateOfBirth(LocalDate.parse(line.substring(15)));;
                     }else if(comp.equals("Pos")){
                         String[] ids = line.substring(9).split(" ");
-                        System.out.println(ids);
                         for(String id: ids){
                             try{
                                 users.get(key).addPost(Integer.parseInt(id));
@@ -148,6 +147,8 @@ public class UserStorage {
         deleteUserProfilePicture(username);
 
         // Copy the profile picture to the destination
+        // File class seems to have no way to copy files, need to use Files.copy() from java.nio.file
+        // Reference: https://stackoverflow.com/questions/16433915/how-to-copy-file-from-one-location-to-another-location
         try {
             Files.copy(picture.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
