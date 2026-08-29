@@ -165,7 +165,19 @@ public class Profile extends LibertaFrame implements ActionListener {
             // TODO(famiu): open Edit Profile and persist valid changes
         }
         else if (e.getSource() == deleteAccountButton) {
-            // TODO(famiu): confirm and delete the signed-in user's account
+            DeleteAccountDialog deleteAccountDialog = new DeleteAccountDialog(this);
+            boolean confirmed = deleteAccountDialog.showDialog();
+
+            if (!confirmed) {
+                return;
+            }
+
+            UserStorage.deleteUser(signedInUsername);
+
+            LibertaMessageDialog messageDialog = new LibertaMessageDialog(this, "Delete Account",
+                    "Account deleted successfully.");
+            messageDialog.showDialog();
+            switchFrame(new Login());
         }
     }
 

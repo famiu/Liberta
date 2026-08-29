@@ -94,10 +94,7 @@ public class PostPanel extends JPanel implements ActionListener {
         caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
         // Set the text now since caret update is disabled
         contentArea.setText(postContent);
-        contentArea.setEditable(false);
-        contentArea.setOpaque(false);
-        contentArea.setBorder(null);
-        contentArea.setFocusable(false);
+        contentArea.setDisplayOnly();
 
         bodyPanel.add(headerPanel, BorderLayout.NORTH);
         bodyPanel.add(contentArea, BorderLayout.CENTER);
