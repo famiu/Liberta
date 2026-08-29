@@ -87,7 +87,7 @@ public class PostPanel extends JPanel implements ActionListener {
         headerPanel.add(timeLabel, BorderLayout.EAST);
 
         // Can't set post content because it would make caret update and scroll the frame
-        JTextArea contentArea = new JTextArea();
+        LibertaTextArea contentArea = new LibertaTextArea();
         // Disable caret update to prevent text area from scrolling the frame
         // Reference: https://stackoverflow.com/questions/3972337/java-swing-jtextarea-in-a-jscrollpane-how-to-prevent-auto-scroll
         DefaultCaret caret = (DefaultCaret) contentArea.getCaret();
@@ -95,13 +95,9 @@ public class PostPanel extends JPanel implements ActionListener {
         // Set the text now since caret update is disabled
         contentArea.setText(postContent);
         contentArea.setEditable(false);
-        contentArea.setLineWrap(true);
-        contentArea.setWrapStyleWord(true);
         contentArea.setOpaque(false);
         contentArea.setBorder(null);
         contentArea.setFocusable(false);
-        contentArea.setFont(Theme.MAIN_FONT);
-        contentArea.setForeground(Theme.TEXT);
 
         bodyPanel.add(headerPanel, BorderLayout.NORTH);
         bodyPanel.add(contentArea, BorderLayout.CENTER);

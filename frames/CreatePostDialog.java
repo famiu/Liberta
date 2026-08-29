@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class CreatePostDialog extends LibertaDialog implements ActionListener, DocumentListener {
     private static final int POST_CHARACTER_LIMIT = 280;
 
-    private JTextArea contentArea;
+    private LibertaTextArea contentArea;
     private JLabel characterCountLabel;
     private LibertaButton cancelButton;
     private LibertaButton createPostButton;
@@ -18,12 +18,8 @@ public class CreatePostDialog extends LibertaDialog implements ActionListener, D
     public CreatePostDialog(LibertaFrame parentFrame) {
         super(parentFrame, "Create Post", 520, 340, new BorderLayout(0, 15));
 
-        contentArea = new JTextArea();
-        contentArea.setFont(Theme.MAIN_FONT);
-        contentArea.setForeground(Theme.TEXT);
+        contentArea = new LibertaTextArea();
         contentArea.setBackground(Theme.BACKGROUND2);
-        contentArea.setLineWrap(true);
-        contentArea.setWrapStyleWord(true);
         contentArea.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
         // Update the character count when the text changes
         // Needs to use DocumentListener to detect changes in the text area
