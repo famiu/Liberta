@@ -100,6 +100,7 @@ public class PostPanel extends JPanel implements ActionListener {
         // Set the text now since caret update is disabled
         contentArea.setText(postContent);
         contentArea.setDisplayOnly();
+        contentArea.setBorder(BorderFactory.createEmptyBorder(6, 0, 6, 0));
 
         bodyPanel.add(headerPanel, BorderLayout.NORTH);
         bodyPanel.add(contentArea, BorderLayout.CENTER);
