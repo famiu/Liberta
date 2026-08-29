@@ -45,23 +45,6 @@ public class EditProfileFrame extends LibertaFrame implements ActionListener, Do
         this.username = username;
         UserAccount user = UserStorage.getUser(username);
 
-        ImageIcon backIcon = new ImageIcon("./assets/icons/png/32/back-button.png");
-        backButton = new LibertaButton(backIcon);
-        backButton.setBorder(null);
-        backButton.addActionListener(this);
-
-        JLabel headingLabel = new JLabel("Edit Profile", SwingConstants.CENTER);
-        headingLabel.setFont(Theme.BOLD_FONT.deriveFont(30f));
-
-        JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(Theme.BACKGROUND_DARK);
-        headerPanel.setBorder(BorderFactory.createEmptyBorder(16, 20, 12, 20));
-        headerPanel.add(backButton, BorderLayout.WEST);
-        headerPanel.add(headingLabel, BorderLayout.CENTER);
-        // The back button pushes the heading to the right, so it isn't centered properly.
-        // Need to add a space to the right of the header panel to balance it out.
-        headerPanel.add(Box.createHorizontalStrut(backButton.getPreferredSize().width), BorderLayout.EAST);
-
         ScrollablePanel formPanel = new ScrollablePanel(true);
         // Need to use GridBagLayout to center the form when there is extra vertical space
         formPanel.setLayout(new GridBagLayout());
@@ -165,9 +148,37 @@ public class EditProfileFrame extends LibertaFrame implements ActionListener, Do
         formScrollBar.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
         formScrollBar.setBackground(Theme.BACKGROUND);
 
+        ImageIcon backIcon = new ImageIcon("./assets/icons/png/32/back-button.png");
+        backButton = new LibertaButton(backIcon);
+        backButton.setBorder(null);
+        backButton.addActionListener(this);
+
+        // We want the back button in the top-left without giving it its own row, this is
+        // apparently done by using JLayeredPane, which allows putting panels on top of each other.
+        // JLaayeredPane has no layout manager, so we need to use OverlayLayout with it.
+        // We can align back button to the top-left using setAlignmentX() and setAlignmentY() on the back panel.
+        // Also need to limit the size of the back panel, otherwise OverlayLayout will stretch it.
+        // References:
+        // https://stackoverflow.com/questions/8792075/overlay-panel-above-another
+        // https://stackoverflow.com/questions/38703262/java-layout-with-component-always-in-top-right/38703764#38703764
+        // https://docs.oracle.com/javase/tutorial/uiswing/components/layeredpane.html
+        // https://docs.oracle.com/en/java/javase/26/docs/api/java.desktop/javax/swing/OverlayLayout.html
+        JPanel backPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        backPanel.setOpaque(false);
+        backPanel.setBorder(BorderFactory.createEmptyBorder(16, 20, 0, 0));
+        backPanel.add(backButton);
+        backPanel.setMaximumSize(backPanel.getPreferredSize());
+        backPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        backPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+        JLayeredPane content = new JLayeredPane();
+        content.setLayout(new OverlayLayout(content));
+        formScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        formScrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
+        content.add(formScrollPane, JLayeredPane.DEFAULT_LAYER);
+        content.add(backPanel, JLayeredPane.PALETTE_LAYER);
+
         panel.setBackground(Theme.BACKGROUND);
-        panel.add(headerPanel, BorderLayout.NORTH);
-        panel.add(formScrollPane, BorderLayout.CENTER);
+        panel.add(content, BorderLayout.CENTER);
     }
 
     private static ImageIcon createProfilePictureIcon(File pictureFile) {
