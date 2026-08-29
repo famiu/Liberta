@@ -16,4 +16,13 @@ public class LibertaTextArea extends JTextArea {
         this.setLineWrap(true);
         this.setWrapStyleWord(true);
     }
+
+    // We need to disable editing and focus and remove the background and border when a text area
+    // is only used to display text
+    public void setDisplayOnly() {
+        this.setEditable(false);
+        this.setFocusable(false);
+        this.setOpaque(false);
+        this.setBorder(null);
+    }
 }

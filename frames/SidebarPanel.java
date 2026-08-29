@@ -118,7 +118,7 @@ public class SidebarPanel extends JPanel implements ActionListener {
             }
         }
         else if (e.getSource() == logoutButton) {
-            // TODO(famiu): handle logout button click
+            parentFrame.switchFrame(new Login());
         }
     }
 }

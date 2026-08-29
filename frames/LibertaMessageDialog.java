@@ -13,10 +13,7 @@ public class LibertaMessageDialog extends LibertaDialog implements ActionListene
 
         // Need to use JTextArea instead of JLabel to support multi-line messages and ensure correct wrapping
         LibertaTextArea messageArea = new LibertaTextArea(message);
-        messageArea.setEditable(false);
-        messageArea.setFocusable(false);
-        messageArea.setOpaque(false);
-        messageArea.setBorder(null);
+        messageArea.setDisplayOnly();
         messageArea.setFont(Theme.BOLD_FONT);
 
         // Make sure the text area for short messages doesn't take up more space than it needs,
