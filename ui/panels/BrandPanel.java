@@ -1,9 +1,11 @@
-package frames;
+package ui.panels;
 
 import java.lang.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
+
+import ui.*;
 
 public class BrandPanel extends JPanel {
     public BrandPanel() {

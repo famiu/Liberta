@@ -1,11 +1,13 @@
-package frames;
+package ui.panels;
 
 import java.lang.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 
-// This panel is used for form fields in Login and Register frames
+import ui.*;
+
+// This panel is used for form fields in LoginFrame and RegisterFrame
 public class AuthFieldPanel extends JPanel {
     public AuthFieldPanel(String labelText, JTextField field) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

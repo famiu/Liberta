@@ -1,4 +1,4 @@
-package frames;
+package ui.panels;
 
 import java.lang.*;
 import java.io.*;
@@ -9,6 +9,11 @@ import java.awt.event.*;
 
 import entity.*;
 import storage.*;
+
+import ui.*;
+import ui.components.*;
+import ui.dialogs.*;
+import ui.frames.*;
 
 public class SidebarPanel extends JPanel implements ActionListener {
     private static final ImageIcon homeIcon = new ImageIcon("./assets/icons/png/32/home-feed-button.png");
@@ -91,11 +96,11 @@ public class SidebarPanel extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == homeButton) {
-            Home home = new Home(username);
+            HomeFrame home = new HomeFrame(username);
             parentFrame.switchFrame(home);
         }
         else if (e.getSource() == myProfileButton) {
-            Profile profile = new Profile(username);
+            ProfileFrame profile = new ProfileFrame(username);
             parentFrame.switchFrame(profile);
         }
         else if (e.getSource() == createPostButton) {
@@ -112,13 +117,13 @@ public class SidebarPanel extends JPanel implements ActionListener {
 
                 // Refresh My Profile if it it's the current frame so the newly created post is shown
                 if (parentFrame.getTitle().equals("My Profile")) {
-                    Profile profile = new Profile(username);
+                    ProfileFrame profile = new ProfileFrame(username);
                     parentFrame.switchFrame(profile);
                 }
             }
         }
         else if (e.getSource() == logoutButton) {
-            parentFrame.switchFrame(new Login());
+            parentFrame.switchFrame(new LoginFrame());
         }
     }
 }

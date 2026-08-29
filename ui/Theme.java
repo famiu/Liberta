@@ -1,4 +1,4 @@
-package frames;
+package ui;
 
 import java.lang.*;
 import javax.swing.*;

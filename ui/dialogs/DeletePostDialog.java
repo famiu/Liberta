@@ -1,6 +1,8 @@
-package frames;
+package ui.dialogs;
 
 import java.lang.*;
+
+import ui.frames.*;
 
 public class DeletePostDialog extends DeleteDialog {
     public DeletePostDialog(LibertaFrame parentFrame) {

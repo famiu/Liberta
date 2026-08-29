@@ -1,4 +1,4 @@
-package frames;
+package ui.panels;
 
 import java.lang.*;
 import java.util.*;
@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 
 import entity.*;
+
+import ui.*;
+import ui.components.*;
 
 public class FeedPanel extends JPanel {
     public FeedPanel(ArrayList<Post> posts, String username) {

@@ -1,4 +1,4 @@
-package frames;
+package ui.panels;
 
 import java.lang.*;
 import java.util.*;
@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 
 import entity.*;
+
+import ui.*;
 
 public class PostListPanel extends ScrollablePanel {
     public PostListPanel(ArrayList<Post> posts, String username) {

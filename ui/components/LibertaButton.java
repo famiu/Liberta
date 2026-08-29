@@ -1,9 +1,11 @@
-package frames;
+package ui.components;
 
 import java.lang.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
+import ui.*;
 
 public class LibertaButton extends JButton implements MouseListener {
     private Color normalBackground, hoverBackground, normalForeground, hoverForeground;

@@ -1,7 +1,9 @@
-package frames;
+package ui.frames;
 
 import java.awt.*;
 import javax.swing.*;
+
+import ui.components.*;
 
 public abstract class LibertaFrame extends JFrame {
     private static final int INITIAL_WIDTH = 1200;
@@ -26,7 +28,7 @@ public abstract class LibertaFrame extends JFrame {
         this.add(panel);
     }
 
-    protected void switchFrame(LibertaFrame frame) {
+    public void switchFrame(LibertaFrame frame) {
         frame.setBounds(this.getBounds());
         frame.setVisible(true);
         this.dispose();

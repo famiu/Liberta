@@ -1,9 +1,13 @@
-package frames;
+package ui.dialogs;
 
 import java.lang.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
+import ui.*;
+import ui.components.*;
+import ui.frames.*;
 
 public abstract class DeleteDialog extends LibertaDialog implements ActionListener {
     private JLabel headingLabel;

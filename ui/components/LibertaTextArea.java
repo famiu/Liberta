@@ -1,7 +1,9 @@
-package frames;
+package ui.components;
 
 import java.lang.*;
 import javax.swing.*;
+
+import ui.*;
 
 public class LibertaTextArea extends JTextArea {
     public LibertaTextArea() {
