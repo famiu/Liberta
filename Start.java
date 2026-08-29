@@ -1,10 +1,11 @@
 import java.lang.*;
-import frames.*;
+import ui.*;
+import ui.frames.*;
 
 public class Start {
     public static void main(String[] args) {
         Theme.apply();
-        Login login = new Login();
+        LoginFrame login = new LoginFrame();
         login.setVisible(true);
     }
 }

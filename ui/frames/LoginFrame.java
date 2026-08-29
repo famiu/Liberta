@@ -1,4 +1,4 @@
-package frames;
+package ui.frames;
 
 import java.lang.*;
 import javax.swing.*;
@@ -8,7 +8,12 @@ import java.awt.event.*;
 
 import storage.*;
 
-public class Login extends LibertaFrame implements ActionListener {
+import ui.*;
+import ui.components.*;
+import ui.dialogs.*;
+import ui.panels.*;
+
+public class LoginFrame extends LibertaFrame implements ActionListener {
     private JTextField usernameField;
     private JPasswordField passwordField;
 
@@ -21,7 +26,7 @@ public class Login extends LibertaFrame implements ActionListener {
     private JPanel promptPanel;
     private CardLayout promptLayout;
 
-    public Login() {
+    public LoginFrame() {
         super("Login", new BorderLayout());
 
         JPanel formContentPanel = new JPanel();
@@ -151,7 +156,7 @@ public class Login extends LibertaFrame implements ActionListener {
             updateSelectedTab();
         }
         else if (e.getSource() == registerPromptButton) {
-            switchFrame(new Register());
+            switchFrame(new RegisterFrame());
         }
         else if (e.getSource() == signInButton) {
             String username = usernameField.getText().trim();
@@ -169,7 +174,7 @@ public class Login extends LibertaFrame implements ActionListener {
                     showMessage("Login", "The password is incorrect.");
                 }
                 else {
-                    switchFrame(new Home(username));
+                    switchFrame(new HomeFrame(username));
                 }
             }
             else {

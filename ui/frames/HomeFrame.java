@@ -1,4 +1,4 @@
-package frames;
+package ui.frames;
 
 import java.lang.*;
 import java.util.*;
@@ -10,11 +10,13 @@ import java.time.*;
 import entity.*;
 import storage.*;
 
-public class Home extends LibertaFrame {
+import ui.panels.*;
+
+public class HomeFrame extends LibertaFrame {
     private FeedPanel feedPanel;
     private SidebarPanel sidebar;
 
-    public Home(String username) {
+    public HomeFrame(String username) {
         super("Home", new BorderLayout());
         sidebar = new SidebarPanel(this, username, "Home");
         feedPanel = new FeedPanel(getFeedPosts(username), username);

@@ -1,8 +1,12 @@
-package frames;
+package ui.dialogs;
 
 import java.lang.*;
 import javax.swing.*;
 import java.awt.*;
+
+import ui.*;
+import ui.components.*;
+import ui.frames.*;
 
 public abstract class LibertaDialog extends JDialog {
     protected JPanel panel;

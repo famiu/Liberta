@@ -1,4 +1,4 @@
-package frames;
+package ui.frames;
 
 import java.lang.*;
 import java.time.*;
@@ -10,7 +10,12 @@ import java.awt.event.*;
 import entity.*;
 import storage.*;
 
-public class Register extends LibertaFrame implements ActionListener {
+import ui.*;
+import ui.components.*;
+import ui.dialogs.*;
+import ui.panels.*;
+
+public class RegisterFrame extends LibertaFrame implements ActionListener {
     private JTextField displayNameField;
     private JTextField usernameField;
     private JTextField emailField;
@@ -21,7 +26,7 @@ public class Register extends LibertaFrame implements ActionListener {
     private LibertaButton createAccountButton;
     private LibertaButton loginPromptButton;
 
-    public Register() {
+    public RegisterFrame() {
         super("Create Account", new BorderLayout());
 
         ScrollablePanel formPanel = new ScrollablePanel(true);
@@ -211,12 +216,12 @@ public class Register extends LibertaFrame implements ActionListener {
         UserStorage.addUser(user);
 
         showMessage("Create Account", "Account created successfully.");
-        switchFrame(new Login());
+        switchFrame(new LoginFrame());
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginPromptButton) {
-            switchFrame(new Login());
+            switchFrame(new LoginFrame());
         }
         else if (e.getSource() == createAccountButton) {
             registerUser();

@@ -1,4 +1,4 @@
-package frames;
+package ui.frames;
 
 import java.lang.*;
 import java.io.*;
@@ -12,7 +12,12 @@ import java.awt.event.*;
 import entity.*;
 import storage.*;
 
-public class Profile extends LibertaFrame implements ActionListener {
+import ui.*;
+import ui.components.*;
+import ui.dialogs.*;
+import ui.panels.*;
+
+public class ProfileFrame extends LibertaFrame implements ActionListener {
     private String signedInUsername;
     private String profileUsername;
 
@@ -23,11 +28,11 @@ public class Profile extends LibertaFrame implements ActionListener {
     private LibertaButton editProfileButton;
     private LibertaButton deleteAccountButton;
 
-    public Profile(String signedInUsername) {
+    public ProfileFrame(String signedInUsername) {
         this(signedInUsername, signedInUsername);
     }
 
-    public Profile(String signedInUsername, String profileUsername) {
+    public ProfileFrame(String signedInUsername, String profileUsername) {
         super(getProfileTitle(signedInUsername, profileUsername), new BorderLayout());
 
         this.signedInUsername = signedInUsername;
@@ -177,7 +182,7 @@ public class Profile extends LibertaFrame implements ActionListener {
             LibertaMessageDialog messageDialog = new LibertaMessageDialog(this, "Delete Account",
                     "Account deleted successfully.");
             messageDialog.showDialog();
-            switchFrame(new Login());
+            switchFrame(new LoginFrame());
         }
     }
 
@@ -194,7 +199,7 @@ public class Profile extends LibertaFrame implements ActionListener {
             }
         }
 
-        // Sort posts from newest to oldest using the same approach as getFeedPosts() in Home
+        // Sort posts from newest to oldest using the same approach as getFeedPosts() in HomeFrame
         profilePosts.sort((p1, p2) -> p2.getTimestamp().compareTo(p1.getTimestamp()));
 
         return profilePosts;

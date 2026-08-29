@@ -1,4 +1,4 @@
-package frames;
+package ui.panels;
 
 import java.lang.*;
 import java.io.*;
@@ -12,6 +12,11 @@ import java.awt.event.*;
 
 import entity.*;
 import storage.*;
+
+import ui.*;
+import ui.components.*;
+import ui.dialogs.*;
+import ui.frames.*;
 
 public class PostPanel extends JPanel implements ActionListener {
     private static final ImageIcon likeIcon = new ImageIcon("./assets/icons/png/24/like-button.png");
@@ -145,14 +150,14 @@ public class PostPanel extends JPanel implements ActionListener {
                 LibertaMessageDialog messageDialog = new LibertaMessageDialog(parentFrame, "Delete Post",
                     "Post deleted successfully.");
                 messageDialog.showDialog();
-                parentFrame.switchFrame(new Profile(this.signedInUser));
+                parentFrame.switchFrame(new ProfileFrame(this.signedInUser));
             }
         }
         else if (e.getSource() == profilePictureButton || e.getSource() == displayNameButton
                  || e.getSource() == usernameButton) {
             LibertaFrame parentFrame = getParentFrame();
             if (parentFrame != null) {
-                parentFrame.switchFrame(new Profile(this.signedInUser, this.post.getAuthor()));
+                parentFrame.switchFrame(new ProfileFrame(this.signedInUser, this.post.getAuthor()));
             }
         }
     }
