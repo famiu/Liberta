@@ -33,7 +33,7 @@ public class SidebarPanel extends JPanel implements ActionListener {
         this.username = username;
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBackground(Theme.BACKGROUND);
+        this.setBackground(Theme.BACKGROUND_DARK);
         Border padding = BorderFactory.createEmptyBorder(15, 15, 15, 15);
         Border separator = BorderFactory.createMatteBorder(0, 0, 0, 1, Theme.BACKGROUND3);
         this.setBorder(BorderFactory.createCompoundBorder(separator, padding));
@@ -71,11 +71,9 @@ public class SidebarPanel extends JPanel implements ActionListener {
     private static JPanel createNavigationPanel(LibertaButton button, boolean active) {
         Dimension indicatorSize = new Dimension(3, 28);
         JPanel indicator = new JPanel();
+        indicator.setOpaque(active);
         if (active) {
             indicator.setBackground(Theme.ACCENT1);
-        }
-        else {
-            indicator.setBackground(Theme.BACKGROUND);
         }
         indicator.setMinimumSize(indicatorSize);
         indicator.setPreferredSize(indicatorSize);

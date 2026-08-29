@@ -9,6 +9,7 @@ public final class Theme {
     public static final Color BACKGROUND = new Color(23, 21, 26);
     public static final Color BACKGROUND2 = new Color(30, 28, 36);
     public static final Color BACKGROUND3 = new Color(43, 40, 49);
+    public static final Color BACKGROUND_DARK = new Color(17, 15, 20);
     public static final Color ACCENT1 = new Color(139, 92, 246);
     public static final Color ACCENT2 = new Color(167, 139, 250);
     public static final Color ACCENT3 = new Color(76, 29, 149);
