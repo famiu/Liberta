@@ -4,8 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 
 public abstract class LibertaFrame extends JFrame {
-    private static final int INITIAL_WIDTH = 1280;
-    private static final int INITIAL_HEIGHT = 720;
+    private static final int INITIAL_WIDTH = 1200;
+    private static final int INITIAL_HEIGHT = 800;
 
     private static final int MIN_WIDTH = 800;
     private static final int MIN_HEIGHT = 600;
@@ -30,5 +30,11 @@ public abstract class LibertaFrame extends JFrame {
         frame.setBounds(this.getBounds());
         frame.setVisible(true);
         this.dispose();
+    }
+
+    // Press button by default when Enter is pressed
+    // Reference: https://stackoverflow.com/questions/13731710/allowing-the-enter-key-to-press-the-submit-button-as-opposed-to-only-using-mo
+    protected void setDefaultButton(LibertaButton button) {
+        this.getRootPane().setDefaultButton(button);
     }
 }

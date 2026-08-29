@@ -22,4 +22,10 @@ public abstract class LibertaDialog extends JDialog {
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         this.add(panel);
     }
+
+    // Press button by default when Enter is pressed
+    // Reference: https://stackoverflow.com/questions/13731710/allowing-the-enter-key-to-press-the-submit-button-as-opposed-to-only-using-mo
+    protected void setDefaultButton(LibertaButton button) {
+        this.getRootPane().setDefaultButton(button);
+    }
 }
