@@ -19,8 +19,10 @@ import ui.dialogs.*;
 import ui.frames.*;
 
 public class PostPanel extends JPanel implements ActionListener {
-    private static final ImageIcon likeIcon = new ImageIcon("./assets/icons/png/24/like-button.png");
-    private static final ImageIcon likedIcon = new ImageIcon("./assets/icons/png/24/liked-button.png");
+    private static final int PROFILE_PICTURE_SIZE = 48;
+    private static final ImageIcon likeIcon = new ImageIcon("./assets/icons/png/32/like-button.png");
+    private static final ImageIcon likedIcon = new ImageIcon("./assets/icons/png/32/liked-button.png");
+    private static final ImageIcon deleteIcon = new ImageIcon("./assets/icons/png/32/delete-button.png");
 
     private Post post;
     private String signedInUser;
@@ -29,6 +31,7 @@ public class PostPanel extends JPanel implements ActionListener {
     private LibertaButton displayNameButton;
     private LibertaButton usernameButton;
     private LibertaButton likeButton;
+    private LibertaButton viewLikesButton;
     private LibertaButton deleteButton;
 
     public PostPanel(Post post, String signedInUser) {
@@ -42,7 +45,8 @@ public class PostPanel extends JPanel implements ActionListener {
 
         File profilePictureFile = UserStorage.getUserProfilePicture(author);
         ImageIcon profilePicture = new ImageIcon(profilePictureFile.getPath());
-        Image scaledImage = profilePicture.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image scaledImage = profilePicture.getImage().getScaledInstance(PROFILE_PICTURE_SIZE, PROFILE_PICTURE_SIZE,
+            Image.SCALE_SMOOTH);
         profilePicture.setImage(scaledImage);
 
         Border padding = BorderFactory.createEmptyBorder(12, 15, 12, 15);
@@ -113,11 +117,18 @@ public class PostPanel extends JPanel implements ActionListener {
         likeButton = new LibertaButton();
         likeButton.setBorder(null);
         likeButton.addActionListener(this);
+
+        viewLikesButton = new LibertaButton();
+        viewLikesButton.setBorder(null);
+        viewLikesButton.setColors(Theme.BACKGROUND, Theme.BACKGROUND, Theme.TEXT_MUTED, Theme.ACCENT1, false);
+        viewLikesButton.addActionListener(this);
+
         updateLikeButton();
         actionPanel.add(likeButton);
+        actionPanel.add(Box.createHorizontalStrut(12));
+        actionPanel.add(viewLikesButton);
 
         if (this.signedInUser.equals(author)) {
-            ImageIcon deleteIcon = new ImageIcon("./assets/icons/png/24/delete-button.png");
             deleteButton = new LibertaButton(deleteIcon);
             deleteButton.setBorder(null);
             deleteButton.addActionListener(this);
@@ -136,6 +147,13 @@ public class PostPanel extends JPanel implements ActionListener {
             post.toggleLike(signedInUser);
             PostStorage.updatePost(post);
             updateLikeButton();
+        }
+        else if (e.getSource() == viewLikesButton) {
+            LibertaFrame parentFrame = getParentFrame();
+            if (parentFrame != null) {
+                LikesDialog likesDialog = new LikesDialog(parentFrame, post, signedInUser);
+                likesDialog.showDialog();
+            }
         }
         else if (e.getSource() == deleteButton) {
             LibertaFrame parentFrame = getParentFrame();
@@ -170,7 +188,7 @@ public class PostPanel extends JPanel implements ActionListener {
         else {
             likeButton.setIcon(likeIcon);
         }
-        likeButton.setText("" + post.getLikeCount());
+        viewLikesButton.setText(post.getLikeCount() + " likes");
     }
 
     // Get parent frame of this panel
