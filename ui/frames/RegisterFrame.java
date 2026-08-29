@@ -120,8 +120,8 @@ public class RegisterFrame extends LibertaFrame implements ActionListener {
         panel.add(formScrollPane, BorderLayout.CENTER);
     }
 
-    private void showMessage(String title, String message) {
-        LibertaMessageDialog messageDialog = new LibertaMessageDialog(this, title, message);
+    private void showMessage(String message) {
+        LibertaMessageDialog messageDialog = new LibertaMessageDialog(this, "Create Account", message);
         messageDialog.showDialog();
     }
 
@@ -134,42 +134,41 @@ public class RegisterFrame extends LibertaFrame implements ActionListener {
         String confirmPassword = new String(confirmPasswordField.getPassword());
 
         if (displayName.isEmpty()) {
-            showMessage("Create Account", "Display name is required.");
+            showMessage("Display name is required.");
             return;
         }
         else if (displayName.length() > UserValidation.MAX_DISPLAY_NAME_LENGTH) {
-            showMessage("Create Account", "Display name cannot exceed "
-                        + UserValidation.MAX_DISPLAY_NAME_LENGTH + " characters.");
+            showMessage("Display name cannot exceed " + UserValidation.MAX_DISPLAY_NAME_LENGTH + " characters.");
             return;
         }
         else if (username.isEmpty()) {
-            showMessage("Create Account", "Username is required.");
+            showMessage("Username is required.");
             return;
         }
         else if (username.length() < UserValidation.MIN_USERNAME_LENGTH
                 || username.length() > UserValidation.MAX_USERNAME_LENGTH) {
-            showMessage("Create Account", "Username must be between " + UserValidation.MIN_USERNAME_LENGTH
+            showMessage("Username must be between " + UserValidation.MIN_USERNAME_LENGTH
                         + " and " + UserValidation.MAX_USERNAME_LENGTH + " characters.");
             return;
         }
         else if (!UserValidation.usernameHasValidCharacters(username)) {
-            showMessage("Create Account", "Username can only contain letters, numbers, and underscores.");
+            showMessage("Username can only contain letters, numbers, and underscores.");
             return;
         }
         else if (UserStorage.checkUser(username)) {
-            showMessage("Create Account", "That username is already in use.");
+            showMessage("That username is already in use.");
             return;
         }
         else if (email.isEmpty()) {
-            showMessage("Create Account", "Email is required.");
+            showMessage("Email is required.");
             return;
         }
         else if (!UserValidation.isValidEmail(email)) {
-            showMessage("Create Account", "Please enter a valid email address.");
+            showMessage("Please enter a valid email address.");
             return;
         }
         else if (dateOfBirthText.isEmpty()) {
-            showMessage("Create Account", "Date of birth is required.");
+            showMessage("Date of birth is required.");
             return;
         }
 
@@ -180,42 +179,41 @@ public class RegisterFrame extends LibertaFrame implements ActionListener {
             dateOfBirth = LocalDate.parse(dateOfBirthText);
         }
         catch (DateTimeParseException exception) {
-            showMessage("Create Account", "Date of birth must use YYYY-MM-DD format.");
+            showMessage("Date of birth must use YYYY-MM-DD format.");
             return;
         }
 
         if (!UserValidation.meetsMinimumAge(dateOfBirth)) {
-            showMessage("Create Account", "You must be at least " + UserValidation.MINIMUM_AGE + " years old to register.");
+            showMessage("You must be at least " + UserValidation.MINIMUM_AGE + " years old to register.");
             return;
         }
         else if (password.isEmpty()) {
-            showMessage("Create Account", "Password is required.");
+            showMessage("Password is required.");
             return;
         }
         else if (!UserValidation.passwordHasValidCharacters(password)) {
-            showMessage("Create Account", "Password can only contain letters, numbers, and symbols.");
+            showMessage("Password can only contain letters, numbers, and symbols.");
             return;
         }
         else if (password.length() < UserValidation.MIN_PASSWORD_LENGTH) {
-            showMessage("Create Account", "Password must contain at least "
-                        + UserValidation.MIN_PASSWORD_LENGTH + " characters.");
+            showMessage("Password must contain at least " + UserValidation.MIN_PASSWORD_LENGTH + " characters.");
             return;
         }
         else if (confirmPassword.isEmpty()) {
-            showMessage("Create Account", "Please confirm your password.");
+            showMessage("Please confirm your password.");
             return;
         }
         else if (!password.equals(confirmPassword)) {
             passwordField.setText("");
             confirmPasswordField.setText("");
-            showMessage("Create Account", "The passwords do not match.");
+            showMessage("The passwords do not match.");
             return;
         }
 
         UserAccount user = new UserAccount(username, password, displayName, email, "", dateOfBirth);
         UserStorage.addUser(user);
 
-        showMessage("Create Account", "Account created successfully.");
+        showMessage("Account created successfully.");
         switchFrame(new LoginFrame());
     }
 

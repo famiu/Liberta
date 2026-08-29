@@ -90,7 +90,7 @@ public final class UserValidation {
     public static boolean meetsMinimumAge(LocalDate dateOfBirth) {
         // References:
         // https://stackoverflow.com/questions/74859459/find-the-minimum-birthdate-of-people-based-on-a-given-age
-        // https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html
+        // https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/time/LocalDate.html
         LocalDate today = LocalDateTime.now().toLocalDate();
         LocalDate minimumDateOfBirth = today.minusYears(MINIMUM_AGE);
         return !dateOfBirth.isAfter(minimumDateOfBirth);
