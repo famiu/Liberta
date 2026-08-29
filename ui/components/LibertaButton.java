@@ -49,7 +49,12 @@ public class LibertaButton extends JButton implements MouseListener {
         this.normalForeground = normalForeground;
         this.hoverForeground = hoverForeground;
         this.setContentAreaFilled(filled);
-        this.applyNormalColors();
+        if (this.isEnabled()) {
+            this.applyNormalColors();
+        }
+        else {
+            this.applyDisabledColors();
+        }
     }
 
     private void applyNormalColors() {
@@ -62,12 +67,36 @@ public class LibertaButton extends JButton implements MouseListener {
         this.setForeground(hoverForeground);
     }
 
+    private void applyDisabledColors() {
+        this.setBackground(Theme.BACKGROUND3);
+        this.setForeground(Theme.TEXT_MUTED);
+    }
+
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (normalBackground != null) {
+            if (enabled) {
+                this.applyNormalColors();
+            }
+            else {
+                this.applyDisabledColors();
+            }
+        }
+    }
+
     public void mouseEntered(MouseEvent e) {
-        this.applyHoverColors();
+        if (this.isEnabled()) {
+            this.applyHoverColors();
+        }
     }
 
     public void mouseExited(MouseEvent e) {
-        this.applyNormalColors();
+        if (this.isEnabled()) {
+            this.applyNormalColors();
+        }
+        else {
+            this.applyDisabledColors();
+        }
     }
 
     public void mouseClicked(MouseEvent e) {

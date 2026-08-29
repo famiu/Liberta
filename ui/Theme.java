@@ -37,6 +37,7 @@ public final class Theme {
 
         UIManager.put("Button.background", ACCENT1);
         UIManager.put("Button.foreground", TEXT);
+        UIManager.put("Button.disabledText", TEXT_MUTED);
         UIManager.put("Button.font", BOLD_FONT);
 
         UIManager.put("TextField.background", BACKGROUND2);
