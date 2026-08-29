@@ -44,6 +44,7 @@ public class DeletePostDialog extends LibertaDialog implements ActionListener {
         cancelButton.setColors(Theme.BACKGROUND2, Theme.BACKGROUND3, Theme.TEXT_MUTED, Theme.TEXT, true);
         cancelButton.setMargin(new Insets(10, 18, 10, 18));
         cancelButton.addActionListener(this);
+        this.setDefaultButton(cancelButton);
 
         deleteButton = new LibertaButton("Delete Post");
         deleteButton.setColors(Theme.ACCENT1, Theme.ACCENT2, Theme.TEXT, Theme.TEXT, true);

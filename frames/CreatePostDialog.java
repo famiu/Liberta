@@ -49,6 +49,7 @@ public class CreatePostDialog extends LibertaDialog implements ActionListener, D
         createPostButton.setMargin(new Insets(10, 18, 10, 18));
         createPostButton.addActionListener(this);
         createPostButton.setEnabled(false);
+        this.setDefaultButton(createPostButton);
 
         buttonPanel.add(cancelButton);
         buttonPanel.add(createPostButton);

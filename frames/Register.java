@@ -1,145 +1,225 @@
 package frames;
 
-import javax.swing.*;
-import static javax.swing.JOptionPane.showMessageDialog;
-import java.awt.*;
-import java.awt.event.*;
-import java.text.*;
+import java.lang.*;
 import java.time.*;
 import java.time.format.*;
-import java.util.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
+import entity.*;
 import storage.*;
-import entity.UserAccount;
 
-public class Register extends JFrame implements ActionListener{
-    private ImageIcon icon;
-    private JTextField userfld, namefld,emailfld;
-    private JPasswordField passfld;
-    private JButton loginbtn, registerbtn;
-    private JFormattedTextField datefld;
-    private Login logPage;
-    public Register(Login logPage) {
-        super("Liberta: Embrace your freedom");
-        this.setSize(1280, 720);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new GridLayout(1,2));
-        this.logPage = logPage;
+public class Register extends LibertaFrame implements ActionListener {
+    private JTextField displayNameField;
+    private JTextField usernameField;
+    private JTextField emailField;
+    private JTextField dateOfBirthField;
+    private JPasswordField passwordField;
+    private JPasswordField confirmPasswordField;
 
-        JPanel brand = new JPanel();
-        JPanel register = new JPanel();
+    private LibertaButton createAccountButton;
+    private LibertaButton loginPromptButton;
 
-        brand.setLayout(new GridBagLayout());
-        JLabel logo = new JLabel(new ImageIcon("./assets/branding/png/512/logo-vertical.png"));
-        logo.setSize(400,400);
-        brand.add(logo);
+    public Register() {
+        super("Create Account", new BorderLayout());
 
-        register.setLayout(new BoxLayout(register,BoxLayout.Y_AXIS));
-        register.setBackground(Color.WHITE);
+        ScrollablePanel formPanel = new ScrollablePanel(true);
+        // Need to use GridBagLayout to center the registration form when there is extra vertical space
+        // Reference: https://stackoverflow.com/questions/7223530/how-can-i-properly-center-a-jpanel-fixed-size-inside-a-jframe
+        formPanel.setLayout(new GridBagLayout());
+        formPanel.setBackground(Theme.BACKGROUND);
+        formPanel.setBorder(BorderFactory.createEmptyBorder(28, 20, 28, 20));
 
-        
-        JLabel username = new JLabel("Username"), pass = new JLabel("Password"), name = new JLabel("Display Name");
-        JLabel date = new JLabel("Date of birth(yyyy-MM-dd)"), email = new JLabel("Email");
-        name.setMaximumSize(new Dimension(300,50));
-        username.setMaximumSize(new Dimension(300,50));
-        pass.setMaximumSize(new Dimension(300,50));
-        email.setMaximumSize(new Dimension(300,50));
-        date.setMaximumSize(new Dimension(300,50));
-        name.setAlignmentX(Component.CENTER_ALIGNMENT);
-        username.setAlignmentX(Component.CENTER_ALIGNMENT);
-        pass.setAlignmentX(Component.CENTER_ALIGNMENT);
-        date.setAlignmentX(Component.CENTER_ALIGNMENT);
-        email.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel formContentPanel = new JPanel();
+        formContentPanel.setLayout(new BoxLayout(formContentPanel, BoxLayout.Y_AXIS));
+        formContentPanel.setOpaque(false);
 
-        namefld = new JTextField(20);
-        namefld.setMaximumSize(new Dimension(300,50));
-        namefld.setAlignmentX(Component.CENTER_ALIGNMENT);
-        userfld = new JTextField(20);
-        userfld.setMaximumSize(new Dimension(300,50));
-        userfld.setAlignmentX(Component.CENTER_ALIGNMENT);
-        emailfld = new JTextField(20);
-        emailfld.setMaximumSize(new Dimension(300,50));
-        emailfld.setAlignmentX(Component.CENTER_ALIGNMENT);
-        passfld = new JPasswordField(20);
-        passfld.setMaximumSize(new Dimension(300,50));
-        passfld.setPreferredSize(new Dimension(300,50));
-        passfld.setFont(new Font("Arial", Font.PLAIN, 25));
-        passfld.setAlignmentX(Component.CENTER_ALIGNMENT);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        datefld = new JFormattedTextField(dateFormat);
-        datefld.setColumns(10);
-        datefld.setMaximumSize(new Dimension(300,50));
-        datefld.setPreferredSize(new Dimension(300,50));
-        datefld.setFont(new Font("Arial", Font.PLAIN, 25));
-        datefld.setValue(new Date());
+        JLabel headingLabel = new JLabel("Create Account");
+        headingLabel.setFont(Theme.BOLD_FONT.deriveFont(30f));
+        headingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        registerbtn = new JButton("Register");
-        loginbtn = new JButton("Already have an account? Login here");
-        loginbtn.setContentAreaFilled(false);
-        loginbtn.setBorderPainted(false);
-        registerbtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        loginbtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        registerbtn.addActionListener(this);
-        loginbtn.addActionListener(this);
+        displayNameField = new JTextField();
+        AuthFieldPanel displayNameFieldPanel = new AuthFieldPanel("Display Name", displayNameField);
 
-        register.add(Box.createVerticalGlue());
-        register.add(name);
-        register.add(namefld);
-        register.add(Box.createRigidArea(new Dimension(0,15)));
-        register.add(username);
-        register.add(userfld);
-        register.add(Box.createRigidArea(new Dimension(0,15)));
-        register.add(email);
-        register.add(emailfld);
-        register.add(Box.createRigidArea(new Dimension(0,15)));
-        register.add(date);
-        register.add(datefld);
-        register.add(Box.createRigidArea(new Dimension(0,15)));
-        register.add(pass);
-        register.add(passfld);
-        register.add(Box.createRigidArea(new Dimension(0,25)));
-        register.add(registerbtn);
-        register.add(Box.createRigidArea(new Dimension(0,15)));
-        register.add(loginbtn);
-        register.add(Box.createVerticalGlue());
+        usernameField = new JTextField();
+        AuthFieldPanel usernameFieldPanel = new AuthFieldPanel("Username", usernameField);
 
-        this.add(brand);
-        this.add(register);
+        emailField = new JTextField();
+        AuthFieldPanel emailFieldPanel = new AuthFieldPanel("Email", emailField);
 
-        icon = new ImageIcon("./assets/branding/png/64/icon.png");
-        this.setIconImage(icon.getImage());
+        dateOfBirthField = new JTextField();
+        AuthFieldPanel dateOfBirthFieldPanel = new AuthFieldPanel("Date of Birth (YYYY-MM-DD)", dateOfBirthField);
 
-        this.setVisible(true);
-        this.revalidate();
-        this.repaint();
+        passwordField = new JPasswordField();
+        AuthFieldPanel passwordFieldPanel = new AuthFieldPanel("Password", passwordField);
+
+        confirmPasswordField = new JPasswordField();
+        AuthFieldPanel confirmPasswordFieldPanel = new AuthFieldPanel("Confirm Password", confirmPasswordField);
+
+        createAccountButton = new LibertaButton("Create Account");
+        createAccountButton.setColors(Theme.ACCENT1, Theme.ACCENT2, Theme.TEXT, Theme.TEXT, true);
+        createAccountButton.setMargin(new Insets(11, 28, 11, 28));
+        createAccountButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        createAccountButton.addActionListener(this);
+        this.setDefaultButton(createAccountButton);
+
+        JLabel loginPromptLabel = new JLabel("Already have an account?");
+        loginPromptLabel.setForeground(Theme.TEXT_MUTED);
+
+        loginPromptButton = new LibertaButton("Sign in here");
+        loginPromptButton.setMargin(new Insets(4, 4, 4, 4));
+        loginPromptButton.addActionListener(this);
+
+        FlowLayout loginPromptLayout = new FlowLayout(FlowLayout.CENTER, 4, 0);
+        loginPromptLayout.setAlignOnBaseline(true);
+        JPanel loginPromptPanel = new JPanel(loginPromptLayout);
+        loginPromptPanel.setOpaque(false);
+        loginPromptPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginPromptPanel.add(loginPromptLabel);
+        loginPromptPanel.add(loginPromptButton);
+
+        formContentPanel.add(headingLabel);
+        formContentPanel.add(Box.createVerticalStrut(36));
+        formContentPanel.add(displayNameFieldPanel);
+        formContentPanel.add(Box.createVerticalStrut(12));
+        formContentPanel.add(usernameFieldPanel);
+        formContentPanel.add(Box.createVerticalStrut(12));
+        formContentPanel.add(emailFieldPanel);
+        formContentPanel.add(Box.createVerticalStrut(12));
+        formContentPanel.add(dateOfBirthFieldPanel);
+        formContentPanel.add(Box.createVerticalStrut(12));
+        formContentPanel.add(passwordFieldPanel);
+        formContentPanel.add(Box.createVerticalStrut(12));
+        formContentPanel.add(confirmPasswordFieldPanel);
+        formContentPanel.add(Box.createVerticalStrut(36));
+        formContentPanel.add(createAccountButton);
+        formContentPanel.add(Box.createVerticalStrut(14));
+        formContentPanel.add(loginPromptPanel);
+
+        formPanel.add(formContentPanel);
+
+        JScrollPane formScrollPane = new JScrollPane(formPanel);
+        formScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        formScrollPane.setBorder(null);
+        formScrollPane.getViewport().setBackground(Theme.BACKGROUND);
+
+        JScrollBar formScrollBar = formScrollPane.getVerticalScrollBar();
+        formScrollBar.setUI(new LibertaScrollBarUI(Theme.TEXT_MUTED, Theme.BACKGROUND2));
+        formScrollBar.setPreferredSize(new Dimension(18, 0));
+        formScrollBar.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
+        formScrollBar.setBackground(Theme.BACKGROUND);
+
+        panel.setBackground(Theme.BACKGROUND);
+        panel.add(new BrandPanel(), BorderLayout.WEST);
+        panel.add(formScrollPane, BorderLayout.CENTER);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource()==registerbtn){
-            String username = userfld.getText(), name = namefld.getText(), email = emailfld.getText();
-            String password = new String(passfld.getPassword());
-            LocalDate dateOfBirth;
-            try{
-                dateOfBirth = LocalDate.parse(datefld.getText());
-            }catch(DateTimeParseException de){
-                return;
-            }
-            if(username.isEmpty()||name.isEmpty()||email.isEmpty()||password.isEmpty()){
-                showMessageDialog(null, "Please fill up all the fields","Warning", JOptionPane.WARNING_MESSAGE);
-                return;
-            }else{
-                if(UserStorage.checkUser(username)){
-                    showMessageDialog(null, "Username must be unique","Warning",JOptionPane.INFORMATION_MESSAGE);
-                    userfld.setText("");
-                    return;
-                }else{
-                    UserStorage.addUser(new UserAccount(username,password,name,email,"",dateOfBirth));
-                }
-            }
+    private void showMessage(String title, String message) {
+        LibertaMessageDialog messageDialog = new LibertaMessageDialog(this, title, message);
+        messageDialog.showDialog();
+    }
+
+    private void registerUser() {
+        String displayName = displayNameField.getText().trim();
+        String username = usernameField.getText().trim();
+        String email = emailField.getText().trim();
+        String dateOfBirthText = dateOfBirthField.getText().trim();
+        String password = new String(passwordField.getPassword());
+        String confirmPassword = new String(confirmPasswordField.getPassword());
+
+        if (displayName.isEmpty()) {
+            showMessage("Create Account", "Display name is required.");
+            return;
         }
-        logPage.setVisible(true);
-        this.setVisible(false);
+        else if (displayName.length() > UserValidation.MAX_DISPLAY_NAME_LENGTH) {
+            showMessage("Create Account", "Display name cannot exceed "
+                        + UserValidation.MAX_DISPLAY_NAME_LENGTH + " characters.");
+            return;
+        }
+        else if (username.isEmpty()) {
+            showMessage("Create Account", "Username is required.");
+            return;
+        }
+        else if (username.length() < UserValidation.MIN_USERNAME_LENGTH
+                || username.length() > UserValidation.MAX_USERNAME_LENGTH) {
+            showMessage("Create Account", "Username must be between " + UserValidation.MIN_USERNAME_LENGTH
+                        + " and " + UserValidation.MAX_USERNAME_LENGTH + " characters.");
+            return;
+        }
+        else if (!UserValidation.usernameHasValidCharacters(username)) {
+            showMessage("Create Account", "Username can only contain letters, numbers, and underscores.");
+            return;
+        }
+        else if (UserStorage.checkUser(username)) {
+            showMessage("Create Account", "That username is already in use.");
+            return;
+        }
+        else if (email.isEmpty()) {
+            showMessage("Create Account", "Email is required.");
+            return;
+        }
+        else if (!UserValidation.isValidEmail(email)) {
+            showMessage("Create Account", "Please enter a valid email address.");
+            return;
+        }
+        else if (dateOfBirthText.isEmpty()) {
+            showMessage("Create Account", "Date of birth is required.");
+            return;
+        }
+
+        // Only way to validate date format in Java is to try to parse it and catch the exception if it fails
+        // Reference: https://stackoverflow.com/questions/55523906/how-to-give-error-message-when-user-input-wrong-format-of-date-in-java8
+        LocalDate dateOfBirth;
+        try {
+            dateOfBirth = LocalDate.parse(dateOfBirthText);
+        }
+        catch (DateTimeParseException exception) {
+            showMessage("Create Account", "Date of birth must use YYYY-MM-DD format.");
+            return;
+        }
+
+        if (!UserValidation.meetsMinimumAge(dateOfBirth)) {
+            showMessage("Create Account", "You must be at least " + UserValidation.MINIMUM_AGE + " years old to register.");
+            return;
+        }
+        else if (password.isEmpty()) {
+            showMessage("Create Account", "Password is required.");
+            return;
+        }
+        else if (!UserValidation.passwordHasValidCharacters(password)) {
+            showMessage("Create Account", "Password can only contain letters, numbers, and symbols.");
+            return;
+        }
+        else if (password.length() < UserValidation.MIN_PASSWORD_LENGTH) {
+            showMessage("Create Account", "Password must contain at least "
+                        + UserValidation.MIN_PASSWORD_LENGTH + " characters.");
+            return;
+        }
+        else if (confirmPassword.isEmpty()) {
+            showMessage("Create Account", "Please confirm your password.");
+            return;
+        }
+        else if (!password.equals(confirmPassword)) {
+            passwordField.setText("");
+            confirmPasswordField.setText("");
+            showMessage("Create Account", "The passwords do not match.");
+            return;
+        }
+
+        UserAccount user = new UserAccount(username, password, displayName, email, "", dateOfBirth);
+        UserStorage.addUser(user);
+
+        showMessage("Create Account", "Account created successfully.");
+        switchFrame(new Login());
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == loginPromptButton) {
+            switchFrame(new Login());
+        }
+        else if (e.getSource() == createAccountButton) {
+            registerUser();
+        }
     }
 }

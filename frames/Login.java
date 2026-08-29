@@ -1,145 +1,186 @@
 package frames;
 
+import java.lang.*;
 import javax.swing.*;
+import javax.swing.border.*;
+import java.awt.*;
+import java.awt.event.*;
 
 import storage.*;
 
-import static javax.swing.JOptionPane.showMessageDialog;
+public class Login extends LibertaFrame implements ActionListener {
+    private JTextField usernameField;
+    private JPasswordField passwordField;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+    private LibertaButton userTabButton;
+    private LibertaButton adminTabButton;
+    private LibertaButton selectedTab;
+    private LibertaButton signInButton;
+    private LibertaButton registerPromptButton;
 
-public class Login extends JFrame implements ActionListener{
-    private ImageIcon icon;
-    private JTextField userfld;
-    private JPasswordField passfld;
-    private JButton loginbtn, registerbtn;
-    private JRadioButton user, admin;
-    private Register regPage;
+    private JPanel promptPanel;
+    private CardLayout promptLayout;
+
     public Login() {
-        super("Liberta: Embrace your freedom");
-        this.setSize(1280, 720);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new GridLayout(1,2));
+        super("Login", new BorderLayout());
 
-        JPanel brand = new JPanel();
-        JPanel login = new JPanel();
+        JPanel formContentPanel = new JPanel();
+        formContentPanel.setLayout(new BoxLayout(formContentPanel, BoxLayout.Y_AXIS));
+        formContentPanel.setOpaque(false);
 
-        brand.setLayout(new GridBagLayout());
-        JLabel logo = new JLabel(new ImageIcon("./assets/branding/png/512/logo-vertical.png"));
-        logo.setSize(400,400);
-        brand.add(logo);
+        JLabel headingLabel = new JLabel("Login");
+        headingLabel.setFont(Theme.BOLD_FONT.deriveFont(30f));
+        headingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        login.setLayout(new GridLayout(2,1));
-        login.setBackground(Color.WHITE);
+        userTabButton = new LibertaButton("User");
+        userTabButton.setFont(Theme.BOLD_FONT.deriveFont(20f));
+        userTabButton.setMargin(new Insets(8, 24, 8, 24));
+        userTabButton.setBorderPainted(true);
+        userTabButton.setColors(Theme.BACKGROUND, Theme.BACKGROUND, Theme.TEXT, Theme.ACCENT1, false);
+        userTabButton.addActionListener(this);
 
-        JPanel input = new JPanel();
-        input.setLayout(new BoxLayout(input,BoxLayout.Y_AXIS));
-        input.setBackground(Color.WHITE);
+        adminTabButton = new LibertaButton("Admin");
+        adminTabButton.setFont(Theme.BOLD_FONT.deriveFont(20f));
+        adminTabButton.setMargin(new Insets(8, 24, 8, 24));
+        adminTabButton.setBorderPainted(true);
+        adminTabButton.setColors(Theme.BACKGROUND, Theme.BACKGROUND, Theme.TEXT, Theme.ACCENT1, false);
+        adminTabButton.addActionListener(this);
 
-        user = new JRadioButton("User");
-        admin = new JRadioButton("Admin");
-        JPanel identity = new JPanel();
-        ButtonGroup group = new ButtonGroup();
-        identity.setBackground(Color.WHITE);
-        identity.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
-        user.setBackground(Color.WHITE);
-        admin.setBackground(Color.WHITE);
-        group.add(user);
-        group.add(admin);
-        identity.add(user);
-        identity.add(admin);
-        user.setSelected(true);
-        JLabel username = new JLabel("Username"), pass = new JLabel("Password");
-        username.setMaximumSize(new Dimension(300,50));
-        pass.setMaximumSize(new Dimension(300,50));
-        username.setAlignmentX(Component.CENTER_ALIGNMENT);
-        pass.setAlignmentX(Component.CENTER_ALIGNMENT);
+        selectedTab = userTabButton;
 
-        userfld = new JTextField(20);
-        userfld.setMaximumSize(new Dimension(300,50));
-        userfld.setAlignmentX(Component.CENTER_ALIGNMENT);
-        passfld = new JPasswordField(20);
-        passfld.setMaximumSize(new Dimension(300,50));
-        passfld.setPreferredSize(new Dimension(300,50));
-        passfld.setFont(new Font("Arial", Font.PLAIN, 25));
-        passfld.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
-        input.add(Box.createVerticalGlue());
-        input.add(identity);
-        input.add(username);
-        input.add(userfld);
-        input.add(Box.createRigidArea(new Dimension(0,15)));
-        input.add(pass);
-        input.add(passfld);
+        JPanel accountTypePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
+        accountTypePanel.setOpaque(false);
+        accountTypePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        accountTypePanel.add(userTabButton);
+        accountTypePanel.add(adminTabButton);
 
-        JPanel btn = new JPanel();
-        btn.setLayout(new BoxLayout(btn,BoxLayout.Y_AXIS));
-        btn.setBackground(Color.WHITE);
+        usernameField = new JTextField();
+        AuthFieldPanel usernameFieldPanel = new AuthFieldPanel("Username", usernameField);
 
-        loginbtn = new JButton("Login");
-        registerbtn = new JButton("Don't have an account? Register here");
-        registerbtn.setContentAreaFilled(false);
-        registerbtn.setBorderPainted(false);
-        loginbtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        registerbtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        loginbtn.addActionListener(this);
-        registerbtn.addActionListener(this);
-        
-        btn.add(Box.createRigidArea(new Dimension(0,25)));
-        btn.add(loginbtn);
-        btn.add(Box.createRigidArea(new Dimension(0,15)));
-        btn.add(registerbtn);
+        passwordField = new JPasswordField();
+        AuthFieldPanel passwordFieldPanel = new AuthFieldPanel("Password", passwordField);
 
-        login.add(input);
-        login.add(btn);
+        signInButton = new LibertaButton("Sign In");
+        signInButton.setColors(Theme.ACCENT1, Theme.ACCENT2, Theme.TEXT, Theme.TEXT, true);
+        signInButton.setMargin(new Insets(11, 28, 11, 28));
+        signInButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        signInButton.addActionListener(this);
+        this.setDefaultButton(signInButton);
 
-        this.add(brand);
-        this.add(login);
+        JLabel registerPromptLabel = new JLabel("Don't have an account?");
+        registerPromptLabel.setForeground(Theme.TEXT_MUTED);
 
-        icon = new ImageIcon("./assets/branding/png/64/icon.png");
-        this.setIconImage(icon.getImage());
+        registerPromptButton = new LibertaButton("Register here");
+        registerPromptButton.setMargin(new Insets(4, 4, 4, 4));
+        registerPromptButton.addActionListener(this);
 
-        this.setVisible(true);
-        this.revalidate();
-        this.repaint();
+        FlowLayout registerPromptLayout = new FlowLayout(FlowLayout.CENTER, 4, 0);
+        registerPromptLayout.setAlignOnBaseline(true);
+        JPanel registerPromptPanel = new JPanel(registerPromptLayout);
+        registerPromptPanel.setOpaque(false);
+        registerPromptPanel.add(registerPromptLabel);
+        registerPromptPanel.add(registerPromptButton);
+
+        JPanel emptyPromptPanel = new JPanel();
+        emptyPromptPanel.setOpaque(false);
+
+        // Hiding the registration prompt changes the form's height and moves the other components, so we have to use
+        // CardLayout to prevent the layout from moving when toggling between user and admin login.
+        // Reference: https://stackoverflow.com/questions/6141321/setvisiblefalse-changes-the-layout-of-my-components-within-my-panel
+        promptLayout = new CardLayout();
+        promptPanel = new JPanel(promptLayout);
+        promptPanel.setOpaque(false);
+        promptPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        promptPanel.add(registerPromptPanel, "Visible");
+        promptPanel.add(emptyPromptPanel, "Hidden");
+
+        formContentPanel.add(headingLabel);
+        formContentPanel.add(Box.createVerticalStrut(22));
+        formContentPanel.add(accountTypePanel);
+        formContentPanel.add(Box.createVerticalStrut(24));
+        formContentPanel.add(usernameFieldPanel);
+        formContentPanel.add(Box.createVerticalStrut(16));
+        formContentPanel.add(passwordFieldPanel);
+        formContentPanel.add(Box.createVerticalStrut(28));
+        formContentPanel.add(signInButton);
+        formContentPanel.add(Box.createVerticalStrut(18));
+        formContentPanel.add(promptPanel);
+
+        // Need to use GridBagLayout to keep the login form in the middle of the available space
+        // Reference: https://stackoverflow.com/questions/7223530/how-can-i-properly-center-a-jpanel-fixed-size-inside-a-jframe
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBackground(Theme.BACKGROUND);
+        formPanel.setBorder(BorderFactory.createEmptyBorder(24, 24, 24, 24));
+        formPanel.add(formContentPanel);
+
+        panel.setBackground(Theme.BACKGROUND);
+        panel.add(new BrandPanel(), BorderLayout.WEST);
+        panel.add(formPanel, BorderLayout.CENTER);
+
+        updateSelectedTab();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource()==loginbtn){
-            String username = userfld.getText(), password = new String(passfld.getPassword());
-            if(username.isEmpty()||password.isEmpty()){
-                showMessageDialog(null, "Please fill up all the fields","Warning", JOptionPane.WARNING_MESSAGE);
-            }else if(user.isSelected()){
-                if(!UserStorage.checkUser(username)){
-                    showMessageDialog(null, "This user does not exist","Warning", JOptionPane.INFORMATION_MESSAGE);
-                }else{
-                    if(!UserStorage.checkPassword(username, password)){
-                        passfld.setText("");
-                        showMessageDialog(null,"Password does not match","Warning", JOptionPane.WARNING_MESSAGE);
-                    }
-                }
-            }else if(admin.isSelected()){
-                if(!AdminStorage.checkAdmin(username)){
-                    showMessageDialog(null, "This user does not exist","Warning", JOptionPane.INFORMATION_MESSAGE);
-                }else{
-                    if(!AdminStorage.checkPassword(username, password)){
-                        passfld.setText("");
-                        showMessageDialog(null,"Password does not match","Warning", JOptionPane.WARNING_MESSAGE);
-                    }
-                }
-            }
+    private void updateSelectedTab() {
+        Border activeBorder = BorderFactory.createMatteBorder(0, 0, 3, 0, Theme.ACCENT1);
+        Border inactiveBorder = BorderFactory.createEmptyBorder(0, 0, 3, 0);
+
+        if (selectedTab == userTabButton) {
+            userTabButton.setBorder(activeBorder);
+            adminTabButton.setBorder(inactiveBorder);
+            promptLayout.show(promptPanel, "Visible");
         }
-        else if(e.getSource()==registerbtn){
-            this.setVisible(false);
-            
-            if(regPage==null){
-                regPage = new Register(this);
+        else {
+            userTabButton.setBorder(inactiveBorder);
+            adminTabButton.setBorder(activeBorder);
+            promptLayout.show(promptPanel, "Hidden");
+        }
+    }
+
+    private void showMessage(String title, String message) {
+        LibertaMessageDialog messageDialog = new LibertaMessageDialog(this, title, message);
+        messageDialog.showDialog();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == userTabButton) {
+            selectedTab = userTabButton;
+            updateSelectedTab();
+        }
+        else if (e.getSource() == adminTabButton) {
+            selectedTab = adminTabButton;
+            updateSelectedTab();
+        }
+        else if (e.getSource() == registerPromptButton) {
+            switchFrame(new Register());
+        }
+        else if (e.getSource() == signInButton) {
+            String username = usernameField.getText().trim();
+            String password = new String(passwordField.getPassword());
+
+            if (username.isEmpty() || password.isEmpty()) {
+                showMessage("Login", "Please fill in all fields.");
             }
-            regPage.setVisible(true);
+            else if (selectedTab == userTabButton) {
+                if (!UserStorage.checkUser(username)) {
+                    showMessage("Login", "This user does not exist.");
+                }
+                else if (!UserStorage.checkPassword(username, password)) {
+                    passwordField.setText("");
+                    showMessage("Login", "The password is incorrect.");
+                }
+                else {
+                    switchFrame(new Home(username));
+                }
+            }
+            else {
+                if (!AdminStorage.checkAdmin(username)) {
+                    showMessage("Login", "This admin does not exist.");
+                }
+                else if (!AdminStorage.checkPassword(username, password)) {
+                    passwordField.setText("");
+                    showMessage("Login", "The password is incorrect.");
+                }
+            }
         }
     }
 }

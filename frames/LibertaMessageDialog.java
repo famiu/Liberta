@@ -47,6 +47,7 @@ public class LibertaMessageDialog extends LibertaDialog implements ActionListene
         okButton.setColors(Theme.ACCENT1, Theme.ACCENT2, Theme.TEXT, Theme.TEXT, true);
         okButton.setMargin(new Insets(10, 18, 10, 18));
         okButton.addActionListener(this);
+        this.setDefaultButton(okButton);
         buttonPanel.add(okButton);
 
         panel.add(messagePanel, BorderLayout.CENTER);
