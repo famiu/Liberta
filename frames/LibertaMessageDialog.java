@@ -19,11 +19,19 @@ public class LibertaMessageDialog extends LibertaDialog implements ActionListene
         messageArea.setBorder(null);
         messageArea.setFont(Theme.BOLD_FONT);
 
-        // In order to make JTextArea not take more height than it needs, we need to set a width first
-        // Similar to what we did in Profile.java
+        // Make sure the text area for short messages doesn't take up more space than it needs,
+        // otherwise it doesn't center properly
+        // Need to disable line wrap temporarily before measuring to get the correct width
+        // Reference: https://stackoverflow.com/questions/33453081/swing-jtextarea-fit-text
+        messageArea.setLineWrap(false);
+        // Make sure the message area doesn't get larger than the maximum width
+        int messageWidth = Math.min(360, messageArea.getPreferredSize().width);
+        messageArea.setLineWrap(true);
+
+        // Need to set a width before getting the preferred height so wrapped text uses the correct height
         // Reference: https://stackoverflow.com/questions/4083322/how-can-i-create-a-jtextarea-with-a-specified-width-and-the-smallest-possible-he
-        messageArea.setSize(new Dimension(360, 80));
-        Dimension messageSize = new Dimension(360, messageArea.getPreferredSize().height);
+        messageArea.setSize(new Dimension(messageWidth, 80));
+        Dimension messageSize = new Dimension(messageWidth, messageArea.getPreferredSize().height);
         messageArea.setPreferredSize(messageSize);
 
         // Need to use GridBagLayout to keep the message in the middle without making it fill all the space
