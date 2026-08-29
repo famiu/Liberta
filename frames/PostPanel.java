@@ -143,13 +143,13 @@ public class PostPanel extends JPanel implements ActionListener {
 
                 PostStorage.deletePost(this.post.getPostId());
                 LibertaMessageDialog messageDialog = new LibertaMessageDialog(parentFrame, "Delete Post",
-                        "Post deleted successfully.");
+                    "Post deleted successfully.");
                 messageDialog.showDialog();
                 parentFrame.switchFrame(new Profile(this.signedInUser));
             }
         }
         else if (e.getSource() == profilePictureButton || e.getSource() == displayNameButton
-                || e.getSource() == usernameButton) {
+                 || e.getSource() == usernameButton) {
             LibertaFrame parentFrame = getParentFrame();
             if (parentFrame != null) {
                 parentFrame.switchFrame(new Profile(this.signedInUser, this.post.getAuthor()));
@@ -167,12 +167,10 @@ public class PostPanel extends JPanel implements ActionListener {
         likeButton.setText("" + post.getLikeCount());
     }
 
+    // Get parent frame of this panel
+    // Reference: https://stackoverflow.com/questions/9650874/java-swing-obtain-window-jframe-from-inside-a-jpanel
     private LibertaFrame getParentFrame() {
-        Window parentWindow = SwingUtilities.getWindowAncestor(this);
-        if (parentWindow instanceof LibertaFrame) {
-            return (LibertaFrame) parentWindow;
-        }
-        return null;
+        return (LibertaFrame) SwingUtilities.getWindowAncestor(this);
     }
 
     // Formats post time nicely

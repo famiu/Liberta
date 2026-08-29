@@ -12,6 +12,13 @@ public class FeedPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.setBackground(Theme.BACKGROUND);
 
+        if (posts.isEmpty()) {
+            JLabel noPostLabel = new JLabel("No posts to show", SwingConstants.CENTER);
+            noPostLabel.setForeground(Theme.TEXT_MUTED);
+            this.add(noPostLabel, BorderLayout.CENTER);
+            return;
+        }
+
         PostListPanel postListPanel = new PostListPanel(posts, username);
         JScrollPane scrollPane = new JScrollPane(postListPanel);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
