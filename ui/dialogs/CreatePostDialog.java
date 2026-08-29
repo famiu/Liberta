@@ -20,7 +20,7 @@ public class CreatePostDialog extends LibertaDialog implements ActionListener, D
     private String postContent;
 
     public CreatePostDialog(LibertaFrame parentFrame) {
-        super(parentFrame, "Create Post", 520, 340, new BorderLayout(0, 15));
+        super(parentFrame, "Create Post", 520, 280, new BorderLayout(0, 15));
 
         contentArea = new LibertaTextArea();
         contentArea.setBackground(Theme.BACKGROUND2);

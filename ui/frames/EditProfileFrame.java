@@ -54,7 +54,7 @@ public class EditProfileFrame extends LibertaFrame implements ActionListener, Do
         headingLabel.setFont(Theme.BOLD_FONT.deriveFont(30f));
 
         JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(Theme.BACKGROUND2);
+        headerPanel.setBackground(Theme.BACKGROUND_DARK);
         headerPanel.setBorder(BorderFactory.createEmptyBorder(16, 20, 12, 20));
         headerPanel.add(backButton, BorderLayout.WEST);
         headerPanel.add(headingLabel, BorderLayout.CENTER);
