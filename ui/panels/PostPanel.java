@@ -53,7 +53,7 @@ public class PostPanel extends JPanel implements ActionListener {
 
         profilePictureButton = new LibertaButton(profilePicture);
         profilePictureButton.setColors(Theme.BACKGROUND, Theme.BACKGROUND2, Theme.TEXT, Theme.TEXT, true);
-        profilePictureButton.setBorder(BorderFactory.createEmptyBorder());
+        profilePictureButton.setBorder(null);
         profilePictureButton.setVerticalAlignment(SwingConstants.TOP);
         profilePictureButton.addActionListener(this);
 
@@ -73,7 +73,7 @@ public class PostPanel extends JPanel implements ActionListener {
         authorPanel.setOpaque(false);
 
         displayNameButton = new LibertaButton(displayName);
-        displayNameButton.setBorder(BorderFactory.createEmptyBorder());
+        displayNameButton.setBorder(null);
         displayNameButton.addActionListener(this);
 
         usernameButton = new LibertaButton("@" + author);
@@ -111,7 +111,7 @@ public class PostPanel extends JPanel implements ActionListener {
         actionPanel.setBorder(BorderFactory.createEmptyBorder(8, 0, 0, 0));
 
         likeButton = new LibertaButton();
-        likeButton.setBorder(BorderFactory.createEmptyBorder());
+        likeButton.setBorder(null);
         likeButton.addActionListener(this);
         updateLikeButton();
         actionPanel.add(likeButton);
@@ -119,7 +119,7 @@ public class PostPanel extends JPanel implements ActionListener {
         if (this.signedInUser.equals(author)) {
             ImageIcon deleteIcon = new ImageIcon("./assets/icons/png/24/delete-button.png");
             deleteButton = new LibertaButton(deleteIcon);
-            deleteButton.setBorder(BorderFactory.createEmptyBorder());
+            deleteButton.setBorder(null);
             deleteButton.addActionListener(this);
             actionPanel.add(Box.createHorizontalGlue());
             actionPanel.add(deleteButton);
@@ -213,7 +213,7 @@ public class PostPanel extends JPanel implements ActionListener {
             // Format older post times with custom date and time patterns
             // References:
             // https://stackoverflow.com/questions/22463062/how-can-i-parse-format-dates-with-localdatetime-java-8
-            // https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html#patterns
+            // https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns
             return "Yesterday at " + postTime.format(DateTimeFormatter.ofPattern("h:mm a"));
         }
         // Use the same approach as above to identify posts from the last 7 days
