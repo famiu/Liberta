@@ -70,6 +70,10 @@ public class UserStorage {
         return users.get(username);
     }
 
+    public static File getDefaultProfilePicture() {
+        return defaultProfilePicture;
+    }
+
     // Return the profile picture of a user
     public static File getUserProfilePicture(String username) {
         if (!users.containsKey(username)) {
