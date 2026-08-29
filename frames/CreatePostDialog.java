@@ -87,6 +87,12 @@ public class CreatePostDialog extends LibertaDialog implements ActionListener, D
         String content = contentArea.getText();
         int characterCount = content.length();
         characterCountLabel.setText(characterCount + "/" + POST_CHARACTER_LIMIT);
+        if (characterCount > POST_CHARACTER_LIMIT) {
+            characterCountLabel.setForeground(Theme.DANGER);
+        }
+        else {
+            characterCountLabel.setForeground(Theme.TEXT_MUTED);
+        }
         createPostButton.setEnabled(!content.trim().isEmpty() && characterCount <= POST_CHARACTER_LIMIT);
     }
 
