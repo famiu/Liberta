@@ -12,6 +12,7 @@ public final class Theme {
     public static final Color ACCENT1 = new Color(139, 92, 246);
     public static final Color ACCENT2 = new Color(167, 139, 250);
     public static final Color ACCENT3 = new Color(76, 29, 149);
+    public static final Color DANGER = new Color(239, 68, 68);
     public static final Color TEXT = Color.WHITE;
     public static final Color TEXT_MUTED = new Color(205, 201, 211);
 
@@ -26,7 +27,7 @@ public final class Theme {
     // Set default colors and fonts for Swing components using UIManager to reduce boilerplate code
     // References:
     // https://stackoverflow.com/questions/9282349/how-to-set-all-java-swing-gui-component-backgrounds-and-foregroundfonts-colors
-    // https://docs.oracle.com/en/java/javase/26/docs/api/java.desktop/javax/swing/UIManager.html
+    // https://docs.oracle.com/javase/8/docs/api/javax/swing/UIManager.html
     // Call this before creating frames so Swing uses these defaults everywhere.
     public static void apply() {
         UIManager.put("Panel.background", BACKGROUND);
