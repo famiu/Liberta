@@ -167,7 +167,7 @@ public class ProfileFrame extends LibertaFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == editProfileButton) {
-            // TODO(famiu): open Edit Profile and persist valid changes
+            switchFrame(new EditProfileFrame(signedInUsername));
         }
         else if (e.getSource() == deleteAccountButton) {
             DeleteAccountDialog deleteAccountDialog = new DeleteAccountDialog(this);

@@ -7,7 +7,7 @@ import java.awt.*;
 
 import ui.*;
 
-// This panel is used for form fields in LoginFrame and RegisterFrame
+// This panel is used for labeled text fields in account forms
 public class AuthFieldPanel extends JPanel {
     public AuthFieldPanel(String labelText, JTextField field) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
