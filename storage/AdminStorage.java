@@ -15,8 +15,8 @@ public class AdminStorage {
         getAllAdmin();
     }
 
-    public AdminStorage(){
-        
+    // Don't need constructor since class is fully static, so make it private to prevent instantiation
+    private AdminStorage(){
     }
 
     //Return all Admin from the database

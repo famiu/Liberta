@@ -8,8 +8,8 @@ public class SessionStorage {
         StorageUtility.ensurePath("data", "session.txt");
     }
 
-    public SessionStorage() {
-
+    // Don't need constructor since class is fully static, so make it private to prevent instantiation
+    private SessionStorage() {
     }
 
     public static String getLoggedInUser() {
