@@ -2,8 +2,8 @@ package storage;
 
 import java.io.*;
 
-public class StorageUtility {
-    public static void ensurePath(String directoryPath) {
+class StorageUtility {
+    static void ensurePath(String directoryPath) {
         File directory = new File(directoryPath);
 
         if (!directory.exists()) {
@@ -15,7 +15,7 @@ public class StorageUtility {
         }
     }
 
-    public static void ensurePath(String directoryPath, String fileName) {
+    static void ensurePath(String directoryPath, String fileName) {
         ensurePath(directoryPath);
 
         File file = new File(directoryPath, fileName);
