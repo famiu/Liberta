@@ -174,6 +174,7 @@ public class LoginFrame extends LibertaFrame implements ActionListener {
                     showMessage("Login", "The password is incorrect.");
                 }
                 else {
+                    SessionStorage.setLoggedInUser(username);
                     switchFrame(new HomeFrame(username));
                 }
             }
