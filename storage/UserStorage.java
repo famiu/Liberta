@@ -19,8 +19,8 @@ public class UserStorage {
         getAllUser();
     }
 
-    public UserStorage(){
-        
+    // Don't need constructor since class is fully static, so make it private to prevent instantiation
+    private UserStorage(){
     }
 
     //Return all user from the database

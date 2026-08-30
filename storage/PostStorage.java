@@ -28,8 +28,7 @@ public class PostStorage {
         readPostsFromFile();
     }
 
-    // Don't need constructor since class is fully static, so make it private to prevent
-    // instantiation
+    // Don't need constructor since class is fully static, so make it private to prevent instantiation
     private PostStorage() {
     }
 

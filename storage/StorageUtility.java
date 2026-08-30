@@ -3,6 +3,10 @@ package storage;
 import java.io.*;
 
 class StorageUtility {
+    // Don't need constructor since class is fully static, so make it private to prevent instantiation
+    private StorageUtility() {
+    }
+
     static void ensurePath(String directoryPath) {
         File directory = new File(directoryPath);
 
