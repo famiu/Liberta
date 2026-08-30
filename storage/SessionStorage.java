@@ -14,9 +14,11 @@ public class SessionStorage {
 
     public static String getLoggedInUser() {
         try (Scanner reader = new Scanner(new File("data/session.txt"))) {
-            String username = reader.nextLine().trim();
-            if (!username.isEmpty()) {
-                return username;
+            if (reader.hasNextLine()) {
+                String username = reader.nextLine().trim();
+                if (!username.isEmpty()) {
+                    return username;
+                }
             }
         }
         catch (IOException e) {
