@@ -6,11 +6,11 @@ import javax.swing.*;
 import ui.components.*;
 
 public abstract class LibertaFrame extends JFrame {
-    private static final int INITIAL_WIDTH = 1200;
-    private static final int INITIAL_HEIGHT = 800;
+    private static final int INITIAL_WIDTH = 1280;
+    private static final int INITIAL_HEIGHT = 720;
 
-    private static final int MIN_WIDTH = 800;
-    private static final int MIN_HEIGHT = 600;
+    private static final int MIN_WIDTH = 960;
+    private static final int MIN_HEIGHT = 540;
 
     private static final ImageIcon icon = new ImageIcon("./assets/branding/png/512/icon.png");
 
