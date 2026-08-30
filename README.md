@@ -1,4 +1,6 @@
-# Liberta
+<p align="center">
+  <img src="assets/branding/svg/wordmark.svg" alt="Liberta" width="320">
+</p>
 
 Liberta is a desktop application that emulates a social media platform. It was created as the group project for our Object Oriented Programming (Java) course.
 
