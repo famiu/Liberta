@@ -1,4 +1,4 @@
-package ui.panels;
+package ui.components;
 
 import java.lang.*;
 import javax.swing.*;
@@ -6,14 +6,14 @@ import java.awt.*;
 
 // Unless Scrollable interface is implemented, panels with JScrollPane don't seem to resize correctly
 // Reference: https://stackoverflow.com/questions/2716274/jscrollpane-needs-to-shrink-its-width
-public class ScrollablePanel extends JPanel implements Scrollable {
+public class LibertaScrollablePanel extends JPanel implements Scrollable {
     private boolean fillHeightWhenShort;
 
-    public ScrollablePanel() {
+    public LibertaScrollablePanel() {
         this(false);
     }
 
-    public ScrollablePanel(boolean fillHeightWhenShort) {
+    public LibertaScrollablePanel(boolean fillHeightWhenShort) {
         this.fillHeightWhenShort = fillHeightWhenShort;
     }
 

@@ -45,7 +45,7 @@ public class EditProfileFrame extends LibertaFrame implements ActionListener, Do
         this.username = username;
         UserAccount user = UserStorage.getUser(username);
 
-        ScrollablePanel formPanel = new ScrollablePanel(true);
+        LibertaScrollablePanel formPanel = new LibertaScrollablePanel(true);
         // Need to use GridBagLayout to center the form when there is extra vertical space
         formPanel.setLayout(new GridBagLayout());
         formPanel.setBackground(Theme.BACKGROUND);

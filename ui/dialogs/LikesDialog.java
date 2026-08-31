@@ -27,7 +27,7 @@ public class LikesDialog extends LibertaDialog implements ActionListener {
         this.parentFrame = parentFrame;
         this.signedInUsername = signedInUsername;
 
-        ScrollablePanel likesPanel = new ScrollablePanel(true);
+        LibertaScrollablePanel likesPanel = new LibertaScrollablePanel(true);
         likesPanel.setLayout(new BoxLayout(likesPanel, BoxLayout.Y_AXIS));
         likesPanel.setBorder(BorderFactory.createEmptyBorder(5, 8, 5, 8));
         likesPanel.setBackground(Theme.BACKGROUND);
