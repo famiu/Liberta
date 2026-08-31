@@ -53,6 +53,14 @@ public class LibertaMessageDialog extends LibertaDialog implements ActionListene
 
         panel.add(messagePanel, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        // We want long dialogs to resize the height to fit the wrapped text, so we need pack()
+        // References:
+        // https://stackoverflow.com/questions/23260894/jdialog-doesnt-size-correctly-with-wrapped-jtextarea
+        // https://docs.oracle.com/en/java/javase/26/docs/api/java.desktop/java/awt/Window.html#pack()
+        this.setMinimumSize(this.getSize());
+        this.pack();
+        this.setLocationRelativeTo(parentFrame);
     }
 
     public void showDialog() {
