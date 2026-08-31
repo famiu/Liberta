@@ -46,7 +46,7 @@ public class ProfileFrame extends LibertaFrame implements ActionListener {
             activeItem = "Home";
         }
 
-        sidebar = new SidebarPanel(this, signedInUsername, activeItem);
+        sidebar = new UserSidebarPanel(this, signedInUsername, activeItem);
         feedPanel = new FeedPanel(getProfilePosts(profileUsername), signedInUsername);
         headerPanel = createHeaderPanel();
 

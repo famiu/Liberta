@@ -185,6 +185,8 @@ public class LoginFrame extends LibertaFrame implements ActionListener {
                 else if (!AdminStorage.checkPassword(username, password)) {
                     passwordField.setText("");
                     showMessage("Login", "The password is incorrect.");
+                }else{
+                    switchFrame(new UserManageFrame());
                 }
             }
         }

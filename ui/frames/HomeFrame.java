@@ -18,7 +18,7 @@ public class HomeFrame extends LibertaFrame {
 
     public HomeFrame(String username) {
         super("Home", new BorderLayout());
-        sidebar = new SidebarPanel(this, username, "Home");
+        sidebar = new UserSidebarPanel(this, username, "Home");
         feedPanel = new FeedPanel(getFeedPosts(username), username);
         this.add(sidebar, BorderLayout.WEST);
         this.add(feedPanel, BorderLayout.CENTER);
