@@ -9,25 +9,26 @@ import ui.*;
 import ui.components.*;
 import ui.frames.*;
 
-public abstract class DeleteDialog extends LibertaDialog implements ActionListener {
+public class DeleteDialog extends LibertaDialog implements ActionListener {
     private JLabel headingLabel;
     private LibertaTextArea messageArea;
     private LibertaButton cancelButton;
     private LibertaButton deleteButton;
     private boolean confirmed;
 
-    protected DeleteDialog(LibertaFrame parentFrame, String title, int width, int height) {
+    public DeleteDialog(LibertaFrame parentFrame, String title, int width, int height, String heading, String message,
+            String deleteButtonText) {
         super(parentFrame, title, width, height, new BorderLayout(0, 20));
 
         ImageIcon deleteIcon = new ImageIcon("./assets/icons/png/48/delete-button.png");
         JLabel deleteIconLabel = new JLabel(deleteIcon);
         deleteIconLabel.setVerticalAlignment(SwingConstants.TOP);
 
-        headingLabel = new JLabel();
+        headingLabel = new JLabel(heading);
         headingLabel.setFont(Theme.BOLD_FONT);
         headingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        messageArea = new LibertaTextArea();
+        messageArea = new LibertaTextArea(message);
         messageArea.setDisplayOnly();
         messageArea.setForeground(Theme.TEXT_MUTED);
         messageArea.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -53,7 +54,7 @@ public abstract class DeleteDialog extends LibertaDialog implements ActionListen
         cancelButton.addActionListener(this);
         this.setDefaultButton(cancelButton);
 
-        deleteButton = new LibertaButton();
+        deleteButton = new LibertaButton(deleteButtonText);
         deleteButton.setColors(Theme.DANGER, Theme.DANGER.brighter(), Theme.TEXT, Theme.TEXT, true);
         deleteButton.setMargin(new Insets(10, 18, 10, 18));
         deleteButton.addActionListener(this);
@@ -63,15 +64,6 @@ public abstract class DeleteDialog extends LibertaDialog implements ActionListen
 
         panel.add(messagePanel, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.SOUTH);
-    }
-
-    protected void setDeleteButtonText(String text) {
-        deleteButton.setText(text);
-    }
-
-    protected void setMessage(String heading, String message) {
-        headingLabel.setText(heading);
-        messageArea.setText(message);
     }
 
     public boolean showDialog() {

@@ -170,8 +170,11 @@ public class ProfileFrame extends LibertaFrame implements ActionListener {
             switchFrame(new EditProfileFrame(signedInUsername));
         }
         else if (e.getSource() == deleteAccountButton) {
-            DeleteAccountDialog deleteAccountDialog = new DeleteAccountDialog(this);
-            boolean confirmed = deleteAccountDialog.showDialog();
+            String message = "Your profile, posts, and likes will be permanently deleted.\n"
+                + "This action cannot be undone.";
+            DeleteDialog deleteDialog = new DeleteDialog(this, "Delete Account", 540, 240, "Delete your account?",
+                message, "Delete Account");
+            boolean confirmed = deleteDialog.showDialog();
 
             if (!confirmed) {
                 return;

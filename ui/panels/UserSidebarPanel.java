@@ -3,9 +3,6 @@ package ui.panels;
 import java.lang.*;
 import java.io.*;
 import javax.swing.*;
-import javax.swing.border.*;
-
-
 import java.awt.*;
 import java.awt.event.*;
 

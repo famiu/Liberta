@@ -1,20 +1,11 @@
 package ui.panels;
 
 import java.lang.*;
-import java.io.*;
 import javax.swing.*;
-import javax.swing.border.*;
-
-
 import java.awt.*;
 import java.awt.event.*;
 
-import entity.*;
-import storage.*;
-
-import ui.*;
 import ui.components.*;
-import ui.dialogs.*;
 import ui.frames.*;
 
 public class AdminSidebarPanel extends SidebarPanel implements ActionListener {
@@ -42,12 +33,12 @@ public class AdminSidebarPanel extends SidebarPanel implements ActionListener {
     
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == UserManagementButton) {
-            UserManageFrame userManage = new UserManageFrame();
-            parentFrame.switchFrame(userManage);
+            UserManagementFrame userManagement = new UserManagementFrame();
+            parentFrame.switchFrame(userManagement);
         }
         else if (e.getSource() == PostManagementButton) {
-            PostManageFrame postManage = new PostManageFrame();
-            parentFrame.switchFrame(postManage);
+            PostManagementFrame postManagement = new PostManagementFrame();
+            parentFrame.switchFrame(postManagement);
         }
         else if (e.getSource() == logoutButton) {
             parentFrame.switchFrame(new LoginFrame());

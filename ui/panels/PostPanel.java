@@ -158,8 +158,9 @@ public class PostPanel extends JPanel implements ActionListener {
         else if (e.getSource() == deleteButton) {
             LibertaFrame parentFrame = getParentFrame();
             if (parentFrame != null) {
-                DeletePostDialog deletePostDialog = new DeletePostDialog(parentFrame);
-                boolean confirmed = deletePostDialog.showDialog();
+                DeleteDialog deleteDialog = new DeleteDialog(parentFrame, "Delete Post", 460, 220,
+                    "Delete this post?", "This action cannot be undone.", "Delete Post");
+                boolean confirmed = deleteDialog.showDialog();
 
                 if (!confirmed) {
                     return;
