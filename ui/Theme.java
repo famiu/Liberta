@@ -32,6 +32,7 @@ public final class Theme {
     // Call this before creating frames so Swing uses these defaults everywhere.
     public static void apply() {
         UIManager.put("Panel.background", BACKGROUND);
+        UIManager.put("ScrollPane.background", BACKGROUND);
 
         UIManager.put("Label.foreground", TEXT);
         UIManager.put("Label.font", MAIN_FONT);

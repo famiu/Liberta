@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 
 import entity.*;
-
 import ui.*;
 
 public class PostListPanel extends ScrollablePanel {
