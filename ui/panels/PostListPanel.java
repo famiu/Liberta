@@ -7,8 +7,9 @@ import java.awt.*;
 
 import entity.*;
 import ui.*;
+import ui.components.*;
 
-public class PostListPanel extends ScrollablePanel {
+public class PostListPanel extends LibertaScrollablePanel {
     public PostListPanel(ArrayList<Post> posts, String username) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(Theme.BACKGROUND);

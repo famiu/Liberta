@@ -29,7 +29,7 @@ public class RegisterFrame extends LibertaFrame implements ActionListener {
     public RegisterFrame() {
         super("Create Account", new BorderLayout());
 
-        ScrollablePanel formPanel = new ScrollablePanel(true);
+        LibertaScrollablePanel formPanel = new LibertaScrollablePanel(true);
         // Need to use GridBagLayout to center the registration form when there is extra vertical space
         // Reference: https://stackoverflow.com/questions/7223530/how-can-i-properly-center-a-jpanel-fixed-size-inside-a-jframe
         formPanel.setLayout(new GridBagLayout());

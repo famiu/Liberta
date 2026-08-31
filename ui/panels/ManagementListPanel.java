@@ -4,8 +4,9 @@ import java.lang.*;
 import javax.swing.*;
 
 import ui.*;
+import ui.components.*;
 
-public abstract class ManagementListPanel extends ScrollablePanel {
+public abstract class ManagementListPanel extends LibertaScrollablePanel {
     protected ManagementListPanel() {
         super(true);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
