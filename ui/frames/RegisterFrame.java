@@ -121,7 +121,7 @@ public class RegisterFrame extends LibertaFrame implements ActionListener {
     }
 
     private void showMessage(String message) {
-        LibertaMessageDialog messageDialog = new LibertaMessageDialog(this, "Create Account", message);
+        MessageDialog messageDialog = new MessageDialog(this, "Create Account", message);
         messageDialog.showDialog();
     }
 

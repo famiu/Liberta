@@ -69,7 +69,7 @@ public class UserSidebarPanel extends SidebarPanel implements ActionListener {
                 Post post = new Post(username, postContent);
                 PostStorage.addPost(post);
 
-                LibertaMessageDialog messageDialog = new LibertaMessageDialog(parentFrame, "Create Post",
+                MessageDialog messageDialog = new MessageDialog(parentFrame, "Create Post",
                         "Post created successfully.");
                 messageDialog.showDialog();
 

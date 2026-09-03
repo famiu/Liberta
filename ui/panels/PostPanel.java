@@ -167,7 +167,7 @@ public class PostPanel extends JPanel implements ActionListener {
                 }
 
                 PostStorage.deletePost(this.post.getPostId());
-                LibertaMessageDialog messageDialog = new LibertaMessageDialog(parentFrame, "Delete Post",
+                MessageDialog messageDialog = new MessageDialog(parentFrame, "Delete Post",
                     "Post deleted successfully.");
                 messageDialog.showDialog();
                 parentFrame.switchFrame(new ProfileFrame(this.signedInUser));

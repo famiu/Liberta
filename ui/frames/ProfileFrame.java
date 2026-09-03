@@ -183,7 +183,7 @@ public class ProfileFrame extends LibertaFrame implements ActionListener {
             UserStorage.deleteUser(signedInUsername);
             SessionStorage.clearLoggedInUser();
 
-            LibertaMessageDialog messageDialog = new LibertaMessageDialog(this, "Delete Account",
+            MessageDialog messageDialog = new MessageDialog(this, "Delete Account",
                     "Account deleted successfully.");
             messageDialog.showDialog();
             switchFrame(new LoginFrame());
