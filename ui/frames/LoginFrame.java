@@ -142,7 +142,7 @@ public class LoginFrame extends LibertaFrame implements ActionListener {
     }
 
     private void showMessage(String title, String message) {
-        LibertaMessageDialog messageDialog = new LibertaMessageDialog(this, title, message);
+        MessageDialog messageDialog = new MessageDialog(this, title, message);
         messageDialog.showDialog();
     }
 

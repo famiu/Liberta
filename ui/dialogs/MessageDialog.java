@@ -9,10 +9,10 @@ import ui.*;
 import ui.components.*;
 import ui.frames.*;
 
-public class LibertaMessageDialog extends LibertaDialog implements ActionListener {
+public class MessageDialog extends LibertaDialog implements ActionListener {
     private LibertaButton okButton;
 
-    public LibertaMessageDialog(LibertaFrame parentFrame, String title, String message) {
+    public MessageDialog(LibertaFrame parentFrame, String title, String message) {
         super(parentFrame, title, 440, 180, new BorderLayout(0, 20));
 
         // Need to use JTextArea instead of JLabel to support multi-line messages and ensure correct wrapping

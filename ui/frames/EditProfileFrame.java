@@ -274,7 +274,7 @@ public class EditProfileFrame extends LibertaFrame implements ActionListener, Do
     }
 
     private void showMessage(String message) {
-        LibertaMessageDialog messageDialog = new LibertaMessageDialog(this, "Edit Profile", message);
+        MessageDialog messageDialog = new MessageDialog(this, "Edit Profile", message);
         messageDialog.showDialog();
     }
 
